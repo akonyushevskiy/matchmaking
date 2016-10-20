@@ -1,0 +1,38 @@
+.header {
+	@include clearfix;
+
+	.header__logo {
+		float: right;
+	}
+
+	.header__nav {
+		ul {
+			font-size: 0;
+			line-height: 19px;
+
+			li {
+				display: inline-block;
+				font-size: 14px;
+				margin-right: 20px;
+				padding-bottom: 5px;
+				border-bottom: 1px solid transparent;
+
+				a {
+					color: $color_Black;
+
+					&:hover {
+						color: $color_Green;
+					}
+				}
+
+				&.active {
+					border-bottom-color: $color_Green;
+
+					a:hover {
+						color: $color_Black;
+					}
+				}
+			}
+		}
+	}
+}

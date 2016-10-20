@@ -1,0 +1,61 @@
+
+
+@mixin media-retina(){
+    @media only screen and (-webkit-min-device-pixel-ratio: 1.5),
+    only screen and (min--moz-device-pixel-ratio: 1.5),
+    only screen and (min-resolution: 240dpi) {
+        @content;
+    }
+}
+
+@mixin media($point, $from){
+
+    @if $from == min {
+        @if $point == xs {
+            @media screen and (min-width: $screen-xxs) { @content ; }
+        }
+        @if $point == sm {
+            @media screen and (min-width: $screen-xs) { @content ; }
+        }
+        @if $point == md {
+            @media screen and (min-width: $screen-sm) { @content ; }
+        }
+        @if $point == lg {
+            @media screen and (min-width: $screen-md) { @content ; }
+        }
+        @if $point == xlg {
+            @media screen and (min-width: $screen-lg) { @content; }
+        }
+    }
+
+    @if $from == max {
+        @if $point == xs {
+            @media screen and (max-width: $screen-xxs-max) { @content ; }
+        }
+        @if $point == sm {
+            @media screen and (max-width: $screen-xs-max) { @content ; }
+        }
+        @if $point == md {
+            @media screen and (max-width: $screen-sm-max) { @content ; }
+        }
+        @if $point == lg {
+            @media screen and (max-width: $screen-md-max) { @content ; }
+        }
+        @if $point == xlg {
+            @media screen and (max-width: $screen-lg-max) { @content; }
+        }
+    }
+
+    @if $point == xs-only {
+        @media screen and (min-width:$screen-xxs) and (max-width: $screen-xs-max) { @content ; }
+    }
+    @if $point == sm-only {
+        @media screen and (min-width:$screen-xs) and (max-width: $screen-sm-max) { @content ; }
+    }
+    @if $point == md-only {
+        @media screen and (min-width:$screen-sm) and (max-width: $screen-md-max) { @content ; }
+    }
+    @if $point == lg-only {
+        @media screen and (min-width:$screen-md-max) { @content ; }
+    }
+}

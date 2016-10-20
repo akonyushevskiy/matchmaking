@@ -1,0 +1,102 @@
+@import "../../../styles/exports";
+
+.player {
+	padding: 10px 10px 10px 90px;
+	border-top: 1px solid #d9d9d9;
+	position: relative;
+	@include user-select(none);
+
+	&.no-dragable {
+		color: tint($color_Black, 50%);;
+	}
+
+	.player-info-left {
+		@include position(absolute, 50% none 0 0);
+		margin-top: -15px;
+		white-space: nowrap;
+	}
+
+	.player-number {
+		display: inline-block;
+		width: 45px;
+		text-align: right;
+		vertical-align: middle;
+		padding-right: 10px;
+		font-size: 21px;
+		font-weight: 300;
+	}
+
+	.player-image {
+		width: 32px;
+		display: inline-block;
+		color: #d9d9d9;
+		vertical-align: middle;
+		line-height: 0;
+
+		svg, img {
+			width: 32px;
+			max-height: 34px;
+		}
+	}
+
+	.player-name {
+		font-size: 15px;
+		line-height: 21px;
+		width: 100%;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.player-role {
+		font-weight: 300;
+		font-size: 13px;
+		line-height: 19px;
+		width: 100%;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	&:first-child {
+		border-top: none;
+	}
+}
+
+.player-preview {
+	width: 40px;
+	height: 40px;
+	margin: -20px 0 0 -20px;
+	position: fixed;
+	left: 0;
+	top: 0;
+	z-index: 100;
+	border-radius: 50%;
+
+	.circle {
+		position: relative;
+		color: $color_Black;
+		font-weight: 300;
+		text-align: center;
+		font-size: 24px;
+		line-height: 38px;
+		border-radius: 50%;
+		border: 1px solid #242F3A;
+		z-index: 100;
+		display: block;
+		width: 40px;
+		height: 40px;
+	}
+
+	&.home_team {
+		.circle {
+			background: #fff;
+		}
+	}
+
+	&.quest_team {
+		.circle {
+			background: $color_Green;
+		}
+	}
+}

@@ -1,0 +1,32 @@
+@import "../../../styles/exports";
+
+.match-add {
+	background: #fff;
+	border-radius: 3px;
+	color: $color_Black;
+
+	.btn-add {
+		padding: 30px;
+		line-height: 58px;
+		font-size: 30px;
+		color: $color_Black;
+		display: block;
+		text-align: center;
+		white-space: nowrap;
+		cursor: pointer;
+		font-weight: 400;
+
+		&:hover {
+			color: $color_Green;
+		}
+
+		svg {
+			width: 28px;
+			height: 28px;
+			display: inline-block;
+			margin-right: 15px;
+			position: relative;
+			top: 3px;
+		}
+	}
+}

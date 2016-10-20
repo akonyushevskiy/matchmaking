@@ -1,0 +1,19 @@
+.btn {
+	line-height: 34px;
+	height: 36px;
+	border: 1px solid transparent;
+	padding: 0 10px;
+	text-align: center;
+	color: $color_Green;
+	display: inline-block;
+
+	&.btn-green {
+		background: $color_Green;
+		color: $color_White;
+	}
+
+	&.btn-block {
+		display: block;
+		width: 100%;
+	}
+}

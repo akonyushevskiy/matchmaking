@@ -1,0 +1,33 @@
+/* Colors */
+$color_Black: #111;
+$color_White: #fff;
+$color_Green: #32cf65;
+
+/* Fonts */
+$font_Primary: 'Roboto', Helvetica, sans-serif;
+$font_Size: 17px;
+$line_Height: 24px;
+
+/* Dimensions */
+$minWidth: 320px;
+$maxWidth: 1920px;
+
+// Sizes
+$min-width:320px;
+$max-width:1080px;
+
+// Media queries helpers
+$screen-xxs: 320px;
+$screen-xxs-max: $screen-xxs - 1px;
+
+$screen-xs: 768px;
+$screen-xs-max: $screen-xs - 1px;
+
+$screen-sm: 992px;
+$screen-sm-max: $screen-sm - 1px;
+
+$screen-md: 1200px;
+$screen-md-max: $screen-md - 1px;
+
+$screen-lg: 1380px;
+$screen-lg-max: $screen-lg - 1px;

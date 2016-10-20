@@ -1,0 +1,151 @@
+@import "../../../styles/exports";
+
+.pitch {
+	position: absolute;
+	z-index: 100;
+
+	.pitch-svg {
+		@include position(absolute, 0 none none 0);
+		width: 100%;
+		height: 100%;
+		@include user-select(none);
+
+		&:not(:root) {
+			overflow: visible;
+		}
+	}
+
+	.pitch-area {
+		rect,
+		line,
+		circle {
+			fill: none;
+			stroke: #fff;
+			stroke-width: 2px;
+		}
+
+		rect,
+		line {
+			shape-rendering: crispEdges;
+		}
+	}
+
+	.pitch-player {
+		cursor: pointer;
+
+		circle {
+			stroke-width: 2px;
+			stroke: #1D2429;
+		}
+
+		text {
+			fill: $color_Black;
+			font-weight: 300;
+			text-align: center;
+			text-anchor: middle;
+			font-size: 24px;
+			pointer-events: none;
+			user-select: none;
+		}
+
+		&.home_team {
+			circle {
+				fill: #ffff;
+			}
+		}
+
+		&.quest_team {
+			circle {
+				fill: $color_Green;
+			}
+		}
+	}
+
+	.control-inner {
+		.section {
+			fill: #242F3A;
+			stroke: #fff;
+			stroke-width: 1px;
+			cursor: pointer;
+
+			&:hover {
+				fill: tint(#242F3A, 10%);;
+			}
+		}
+
+		.icon {
+			fill: #fff;
+			shape-rendering: geometricPrecision;
+			pointer-events: none;
+		}
+
+		&.active {
+			.section {
+				fill: #fff;
+			}
+
+			.icon {
+				fill: #242F3A;
+			}
+		}
+	}
+
+	.control-outer {
+		.section {
+			fill: #242F3A;
+			stroke: #fff;
+			stroke-width: 1px;
+			cursor: pointer;
+
+			&:hover {
+				fill: tint(#242F3A, 10%);;
+			}
+		}
+
+		text {
+			fill: #fff;
+			font-size: 31px;
+		}
+
+		&.active {
+			.section {
+				fill: #fff;
+			}
+
+			text {
+				fill: #242F3A;
+			}
+		}
+	}
+
+	.pitch-comment {
+		@include position(fixed, none 0 0 50%);
+		margin-left: 1px;
+		height: 40px;
+		z-index: 101;
+		background: #fff;
+		line-height: 0;
+		text-align: left;
+		@include transform(translateY(100%));
+		@include transition(transform .2s);
+
+		&.active {
+			@include transform(translateY(0));
+		}
+
+		.input {
+			line-height: 20px;
+			height: 40px;
+			border: none;
+			display: block;
+			padding: 5px 10px;
+			width: calc(100% - 62px);
+			color: $color_Black;
+		}
+
+		button.btn {
+			@include position(absolute, 2px 2px none none);
+			width: 60px;
+		}
+	}
+}

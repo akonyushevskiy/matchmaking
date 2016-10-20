@@ -1,0 +1,79 @@
+@import "../../../styles/exports";
+
+.match-list-item {
+	background: #fff;
+	border-radius: 3px;
+	margin-top: 20px;
+	color: $color_Black;
+	position: relative;
+
+	.link {
+		position: relative;
+		display: block;
+		color: $color_Black;
+		padding: 30px 30px 30px 150px;
+		margin-right: 238px;
+
+		.logos {
+			@include position(absolute, 21px none 0 30px);
+
+			img {
+				max-width: 60px;
+
+				&:first-child {
+					position: relative;
+					z-index: 1;
+				}
+
+				& + img {
+					margin-left: -20px;
+				}
+			}
+		}
+
+		.name {
+			font-size: 30px;
+			width: 100%;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			display: block;
+			padding-bottom: 10px;
+		}
+
+		.desc {
+			font-weight: 300;
+			width: 100%;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			display: block;
+		}
+
+		&:hover {
+			.name {
+				color: $color_Green;
+			}
+		}
+	}
+
+	.controls {
+		@include position(absolute, 0 0 0 none);
+
+		.control {
+			width: 119px;
+			height: 118px;
+			text-align: center;
+			line-height: 118px;
+			float: left;
+			border-left: 1px solid #1D2429;
+			display: block;
+			cursor: pointer;
+
+			svg {
+				width: 32px;
+				height: 32px;
+				display: inline-block;
+				vertical-align: middle;
+			}
+		}
+	}
+}
