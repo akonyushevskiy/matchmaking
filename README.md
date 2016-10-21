@@ -17,9 +17,9 @@ $ npm install
 
 ### Server params
 
-PORT - port to listen, default 3000
-JWT - jwt secret, default "matchmetrics"
-DB - mongoDB connect uri, default: mongodb://localhost/matchmetrics
+* PORT - port to listen, default 3000
+* JWT - jwt secret, default "matchmetrics"
+* DB - mongoDB connect uri, default: mongodb://localhost/matchmetrics
 
 
 ### Init data 
