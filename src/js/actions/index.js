@@ -9,10 +9,10 @@ export const FETCH_ADD_MATCH = "FETCH_ADD_MATCH";
 export const UPDATE_MATCH_TEAM = "UPDATE_MATCH_TEAM";
 export const UPDATE_MATCH = "UPDATE_MATCH";
 
-var ROOT_URL = 'http://localhost:8080';
+var ROOT_URL = 'http://localhost:3000';
 
 if (process.env.NODE_ENV !== 'production') {
-	ROOT_URL = 'http://localhost:8080';
+	ROOT_URL = 'http://localhost:3000';
 }
 
 export function signIn(props) {
