@@ -12,7 +12,7 @@ export const UPDATE_MATCH = "UPDATE_MATCH";
 var ROOT_URL = 'http://localhost:3000';
 
 if (process.env.NODE_ENV !== 'production') {
-	ROOT_URL = 'http://localhost:3000';
+	ROOT_URL = 'http://api.mm.konyushevskiy.com';
 }
 
 export function signIn(props) {
