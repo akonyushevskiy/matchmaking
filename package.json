@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon server.js",
-    "staging": "export NODE_ENV=development && export PORT=3001 && forever start build/server.babel.js",
+    "staging": "export NODE_ENV=development && export PORT=3005 && forever start build/server.babel.js",
     "production": "./node_modules/.bin/babel -d build/ app/ && export NODE_ENV=production && forever start build/server.babel.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
