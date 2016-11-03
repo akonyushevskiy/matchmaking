@@ -67,6 +67,7 @@
   },
   "dependencies": {
     "autoprefixer": "6.3.6",
+    "axios": "0.15.2",
     "classnames": "2.2.3",
     "d3": "4.2.7",
     "lodash": "4.11.1",

@@ -3,8 +3,8 @@ import './MatchList.scss';
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import MatchAdd from '../../components/matchAdd/matchAdd.js';
-import MatchListItem from '../../components/matchListItem/matchListItem.js';
+import MatchAdd from '../../components/MatchAdd/MatchAdd.js';
+import MatchListItem from '../../components/MatchListItem/MatchListItem.js';
 
 import { fetchMatches } from '../../actions/index';
 
