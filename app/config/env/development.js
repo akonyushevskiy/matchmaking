@@ -1,5 +1,5 @@
 module.exports = {
-	PORT: process.env.PORT || 8080,
-	DB: process.env.DB || 'mongodb://localhost/matchmaking',
-	JWT: process.env.JWT || 'matchmaking'
+	PORT: process.env.PORT || 3000,
+	DB: process.env.DB || 'mongodb://localhost/matchmetrics',
+	JWT: process.env.JWT || 'matchmetrics'
 };
