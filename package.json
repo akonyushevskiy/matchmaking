@@ -33,6 +33,10 @@
     "babel-polyfill": "^6.13.0",
     "babel-preset-es2015": "^6.14.0",
     "babel-preset-stage-0": "^6.5.0",
-    "babel-register": "^6.14.0"
+    "babel-register": "^6.14.0",
+    "ejs": "^2.5.2",
+    "html-pdf": "^2.1.0",
+    "mu2": "^0.5.21",
+    "pdfkit": "^0.8.0"
   }
 }

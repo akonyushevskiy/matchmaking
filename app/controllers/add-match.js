@@ -7,6 +7,8 @@ module.exports = function (req, res) {
 
 	const addValues = (item, key) => {
 		item.number = key + 1;
+		item.reserve = false;
+		item.active = false;
 		item.offset = {
 			left: null,
 			top: null

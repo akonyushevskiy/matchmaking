@@ -1,0 +1,919 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css?family=Signika+Negative:300,400,600" rel="stylesheet">
+    <style>
+
+        @charset "UTF-8";
+        /* Plugins */
+        /* Helpers */
+        /* Colors */
+        /* Fonts */
+        /* Dimensions */
+        .clearfix:before,
+        .clearfix:after {
+            content: " ";
+            display: table;
+        }
+
+        .clearfix:after {
+            clear: both;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        /* Base */
+        /**
+         * modified version of eric meyer's reset 2.0
+         * http://meyerweb.com/eric/tools/css/reset/
+         */
+        /**
+         * basic reset
+         */
+        html, body, div, span, applet, object, iframe,
+        h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+        a, abbr, acronym, address, big, cite, code,
+        del, dfn, em, img, ins, kbd, q, s, samp,
+        small, strike, strong, sub, sup, tt, var,
+        b, u, i, center,
+        dl, dt, dd, ol, ul, li,
+        fieldset, form, label, legend,
+        table, caption, tbody, tfoot, thead, tr, th, td,
+        article, aside, canvas, details, embed,
+        figure, figcaption, footer, header, main,
+        menu, nav, output, ruby, section, summary,
+        time, mark, audio, video {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
+
+        /**
+         * HTML5 display-role reset for older browsers
+         */
+        article, aside, details, figcaption, figure,
+        footer, header, menu, nav, section,
+        main, summary {
+            display: block;
+        }
+
+        body {
+            line-height: 1;
+        }
+
+        ol, ul {
+            list-style: none;
+        }
+
+        blockquote, q {
+            quotes: none;
+        }
+
+        blockquote:before, blockquote:after,
+        q:before, q:after {
+            content: '';
+            content: none;
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        /**
+         * modified version of normalize.css 3.0.2
+         * http://necolas.github.io/normalize.css/
+         */
+        /**
+         * 1. Set default font family to sans-serif.
+         * 2. Prevent iOS text size adjust after orientation change, without disabling
+         *    user zoom.
+         */
+        html {
+            font-family: sans-serif;
+            -ms-text-size-adjust: 100%;
+            -webkit-text-size-adjust: 100%;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /**
+         * HTML5 display definitions
+         * =============================================================================
+         */
+        /**
+         * 1. Correct `inline-block` display not defined in IE 8/9.
+         * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.
+         */
+        audio,
+        canvas,
+        progress,
+        video {
+            display: inline-block;
+            vertical-align: baseline;
+        }
+
+        /**
+         * Prevent modern browsers from displaying `audio` without controls.
+         * Remove excess height in iOS 5 devices.
+         */
+        audio:not([controls]) {
+            display: none;
+            height: 0;
+        }
+
+        /**
+         * Address `[hidden]` styling not present in IE 8/9/10.
+         * Hide the `template` element in IE 8/9/11, Safari, and Firefox < 22.
+         */
+        [hidden],
+        template {
+            display: none;
+        }
+
+        /**
+         * Links
+         * =============================================================================
+         */
+        /**
+         * Remove the gray background color from active links in IE 10.
+         */
+        a {
+            background-color: transparent;
+        }
+
+        /**
+         * Improve readability when focused and also mouse hovered in all browsers.
+         */
+        a:active,
+        a:hover {
+            outline: 0;
+        }
+
+        /**
+         * Text-level semantics
+         * =============================================================================
+         */
+        /**
+         * Address styling not present in IE 8/9/10/11, Safari, and Chrome.
+         */
+        abbr[title] {
+            border-bottom: 1px dotted;
+            cursor: help;
+        }
+
+        /**
+         * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.
+         */
+        b,
+        strong {
+            font-weight: bold;
+        }
+
+        /**
+         * 1. Address styling not present in Safari and Chrome.
+         * 2. Set previously resetted italic font-style
+         */
+        dfn,
+        i, em {
+            font-style: italic;
+        }
+
+        /**
+         * Address styling not present in IE 8/9.
+         */
+        mark {
+            background: #ff0;
+            color: #000;
+        }
+
+        /**
+         * Address inconsistent and variable font size in all browsers.
+         */
+        small {
+            font-size: 80%;
+        }
+
+        /**
+         * Prevent `sub` and `sup` affecting `line-height` in all browsers.
+         */
+        sub,
+        sup {
+            font-size: 75%;
+            line-height: 0;
+            position: relative;
+        }
+
+        sup {
+            top: -0.5em;
+        }
+
+        sub {
+            bottom: -0.25em;
+        }
+
+        /**
+         * Embedded content
+         * =============================================================================
+         */
+        /**
+         * Remove border when inside `a` element in IE 8/9/10.
+         */
+        img {
+            border: 0;
+        }
+
+        /**
+         * Correct overflow not hidden in IE 9/10/11.
+         */
+        svg:not(:root) {
+            overflow: hidden;
+        }
+
+        /**
+         * Grouping content
+         * =============================================================================
+         */
+        /**
+         * Address differences between Firefox and other browsers.
+         */
+        hr {
+            box-sizing: content-box;
+            height: 0;
+        }
+
+        /**
+         * Contain overflow in all browsers.
+         */
+        pre {
+            overflow: auto;
+        }
+
+        /**
+         * Address odd `em`-unit font size rendering in all browsers.
+         */
+        code,
+        kbd,
+        pre,
+        samp {
+            font-family: monospace, monospace;
+        }
+
+        /**
+         * Forms
+         * =============================================================================
+         */
+        /**
+         * Known limitation: by default, Chrome and Safari on OS X allow very limited
+         * styling of `select`, unless a `border` property is set.
+         */
+        /**
+         * 1. Correct color not being inherited.
+         *    Known issue: affects color of disabled elements.
+         * 2. Correct font properties not being inherited.
+         * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.
+         */
+        button,
+        input,
+        optgroup,
+        select,
+        textarea {
+            color: inherit;
+            font: inherit;
+            margin: 0;
+        }
+
+        /**
+         * Address `overflow` set to `hidden` in IE 8/9/10/11.
+         */
+        button {
+            overflow: visible;
+        }
+
+        /**
+         * Address inconsistent `text-transform` inheritance for `button` and `select`.
+         * All other form control elements do not inherit `text-transform` values.
+         * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.
+         * Correct `select` style inheritance in Firefox.
+         */
+        button,
+        select {
+            text-transform: none;
+        }
+
+        /**
+         * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`
+         *    and `video` controls.
+         * 2. Correct inability to style clickable `input` types in iOS.
+         * 3. Improve usability and consistency of cursor style between image-type
+         *    `input` and others.
+         */
+        button,
+        html input[type="button"],
+        input[type="reset"],
+        input[type="submit"] {
+            -webkit-appearance: button;
+            cursor: pointer;
+        }
+
+        /**
+         * Re-set default cursor for disabled elements.
+         */
+        button[disabled],
+        html input[disabled] {
+            cursor: default;
+        }
+
+        /**
+         * Remove inner padding and border in Firefox 4+.
+         */
+        button::-moz-focus-inner,
+        input::-moz-focus-inner {
+            border: 0;
+            padding: 0;
+        }
+
+        /**
+         * Address Firefox 4+ setting `line-height` on `input` using `!important` in
+         * the UA stylesheet.
+         */
+        input {
+            line-height: normal;
+        }
+
+        /**
+         * It's recommended that you don't attempt to style these elements.
+         * Firefox's implementation doesn't respect box-sizing, padding, or width.
+         *
+         * 1. Address box sizing set to `content-box` in IE 8/9/10.
+         * 2. Remove excess padding in IE 8/9/10.
+         */
+        input[type="checkbox"],
+        input[type="radio"] {
+            box-sizing: border-box;
+            padding: 0;
+        }
+
+        /**
+         * Fix the cursor style for Chrome's increment/decrement buttons. For certain
+         * `font-size` values of the `input`, it causes the cursor style of the
+         * decrement button to change from `default` to `text`.
+         */
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            height: auto;
+        }
+
+        /**
+         * 1. Address `appearance` set to `searchfield` in Safari and Chrome.
+         * 2. Address `box-sizing` set to `border-box` in Safari and Chrome
+         *    (include `-moz` to future-proof).
+         */
+        input[type="search"] {
+            -webkit-appearance: none;
+        }
+
+        /**
+         * Remove inner padding and search cancel button in Safari and Chrome on OS X.
+         * Safari (but not Chrome) clips the cancel button when the search input has
+         * padding (and `textfield` appearance).
+         */
+        input[type="search"]::-webkit-search-cancel-button,
+        input[type="search"]::-webkit-search-decoration {
+            -webkit-appearance: none;
+        }
+
+        /**
+         * Remove default vertical scrollbar in IE 8/9/10/11.
+         */
+        textarea {
+            overflow: auto;
+        }
+
+        /**
+         * Don't inherit the `font-weight` (applied by a rule above).
+         * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.
+         */
+        optgroup {
+            font-weight: bold;
+        }
+
+        /**
+         * responsive viewport
+         */
+        @viewport {
+            width: device-width;
+        }
+
+        /**
+         * inherit box model
+         */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        /**
+         * iOS "clickable elements" fix for role="button"
+         *
+         * Fixes "clickability" issue (and more generally, the firing of events such as focus as well)
+         * for traditionally non-focusable elements with role="button"
+         * see https://developer.mozilla.org/en-US/docs/Web/Events/click#Safari_Mobile
+         */
+        [role="button"] {
+            cursor: pointer;
+        }
+        a,
+        area,
+        button,
+        [role="button"],
+        input,
+        label,
+        select,
+        summary,
+        textarea {
+            touch-action: manipulation;
+        }
+        [hidden] {
+            display: none !important;
+        }
+
+        * {
+            outline: none !important;
+        }
+
+        body {
+            color: #fff;
+            font-family: 'Signika Negative', sans-serif;
+            font-size: 17px;
+            line-height: 24px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Links */
+        a {
+            text-decoration: none;
+            color: #111;
+        }
+
+        a:hover {
+            color: #32cf65;
+        }
+
+        /*Ð—Ð°Ð³Ð¾Ð»Ð¾Ð²ÐºÐ¸*/
+        h1 {
+            font-size: 42px;
+            line-height: 59px;
+            font-weight: 400;
+        }
+
+        h2 {
+            font-size: 24px;
+            font-weight: 400;
+        }
+
+        h3 {
+            font-size: 18px;
+            font-weight: 400;
+        }
+
+        h4, h5, h6 {
+            font-size: 17px;
+            font-weight: 400;
+        }
+
+        /*Ð¡Ð¿Ð¸ÑÐºÐ¸*/
+        nav ul, nav ol {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        nav ul li, nav ol li {
+            padding-left: 0;
+        }
+
+        /*Ð¢Ð°Ð±Ð»Ð¸Ñ†Ñ‹*/
+        table {
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        table caption {
+            text-align: left;
+            color: #888888;
+            padding: 0 0 5px 0;
+        }
+
+        table th, table td {
+            padding: 10px;
+            border: 1px solid #d9d9d9;
+        }
+
+        table th {
+            text-align: left;
+        }
+
+        /*Ð­Ð»ÐµÐ¼ÐµÐ½Ñ‚Ñ‹*/
+        p {
+            margin: 0;
+        }
+
+        p + p {
+            /*TODO: */
+        }
+
+        blockquote {
+            text-align: center;
+            display: block;
+            margin: 20px 0;
+        }
+
+        hr {
+            display: block;
+            height: 1px;
+            border: none;
+            margin: 10px 0 20px;
+            padding: 0;
+            background: #d9d9d9;
+        }
+
+        /*ÐšÐ°Ñ€Ñ‚Ð¸Ð½ÐºÐ¸*/
+        img {
+            vertical-align: middle;
+        }
+
+        h1:first-child, h2:first-child, h3:first-child, h4:first-child, h5:first-child, h6:first-child, ul:first-child, ol:first-child, table:first-child, p:first-child, blockquote:first-child {
+            margin-top: 0;
+        }
+
+        h1:last-child, h2:last-child, h3:last-child, h4:last-child, h5:last-child, h6:last-child, ul:last-child, ol:last-child, table:last-child, p:last-child, blockquote:last-child {
+            margin-bottom: 0;
+        }
+
+        h1 + p,
+        h1 + ul, h2 + p,
+        h2 + ul, h3 + p,
+        h3 + ul, h4 + p,
+        h4 + ul, h5 + p,
+        h5 + ul, h6 + p,
+        h6 + ul {
+            /*TODO: */
+        }
+
+        p + ul,
+        p + ol {
+            margin-top: 10px;
+        }
+
+        .export {
+            background: #fff;
+            color: #111;
+            font-weight: 300;
+        }
+
+        .export b {
+            font-weight: 400;
+        }
+
+        .export table {
+            font-size: 16px;
+        }
+
+        .export table th {
+            font-weight: 400;
+        }
+
+        .export .mt {
+            margin-top: 20px;
+        }
+
+        .export .export-pitch {
+            background-color: #1D2429;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background: radial-gradient(circle, #242F3A, #1D2429);
+            width: 500px;
+            height: 750px;
+            position: relative;
+            margin: 40px auto 20px;
+        }
+
+        .export .export-pitch:before {
+            background: inherit;
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            bottom: -20px;
+            left: -20px;
+            content: '';
+            display: block;
+        }
+
+        .export .export-pitch .pitch-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .export .export-pitch .pitch-area rect,
+        .export .export-pitch .pitch-area line,
+        .export .export-pitch .pitch-area circle {
+            fill: none;
+            stroke: #fff;
+            stroke-width: 2px;
+        }
+
+        .export .export-pitch .pitch-area rect,
+        .export .export-pitch .pitch-area line {
+            shape-rendering: crispEdges;
+        }
+
+        .export .export-pitch .pitch-player {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            position: absolute;
+            text-align: center;
+            line-height: 40px;
+            font-weight: 400;
+            font-size: 24px;
+            margin: -20px 0 0 -20px;
+        }
+
+        .export .export-pitch .pitch-player.home_team {
+            background: #fff;
+        }
+
+        .export .export-pitch .pitch-player.quest_team {
+            background: #32cf65;
+        }
+
+        .export .player-profile {
+            margin: 40px 0;
+        }
+
+        .export .player-profile + .player-profile {
+            margin-top: 60px;
+        }
+
+        .export .export-title {
+            margin-top: 180px;
+        }
+
+        .export .export-comment-title {
+            margin-top: 20px;
+            padding-bottom: 5px;
+        }
+
+        .break-after {
+            page-break-after: always;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="export">
+
+        <div class="break-after">
+            <div class="export-title"></div>
+            <h2 class="text-center"><%= home_team.team_name %> – <%= quest_team.team_name %></h2>
+            <div class="mt">
+                <div><b>Date:</b> <%= times.date %></div>
+                <div><b>Time:</b> <%= times.time %></div>
+                <div><b>Location:</b> <%= home_team.stadion_name %>, <%= location %></div>
+            </div>
+
+            <% if (comment) { %>
+                <div class="export-comment-title"><b>Comment:</b></div>
+                <div><%- comment %></div>
+            <% } %>
+
+            <table>
+                <caption>Teams comment</caption>
+                <thead>
+                <tr>
+                    <th><%= home_team.team_name %></th>
+                    <th><%= quest_team.team_name %></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><%= home_team.note %></td>
+                    <td><%= quest_team.note %></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="break-after">
+            <div class="export-pitch">
+                <svg class="pitch-svg">
+                    <g class="pitch-area">
+                        <defs>
+                            <clipPath id="cut">
+                                <rect x="1" y="120.67999999999995" width="498" height="508.63999999999976" fill="red"></rect>
+                            </clipPath>
+                        </defs>
+                        <rect x="1" y="1" width="498" height="747.9999999999997"></rect>
+                        <rect x="100.6" y="1" width="298.8" height="119.67999999999995"></rect>
+                        <rect x="100.6" y="629.3199999999997" width="298.8" height="119.67999999999995"></rect>
+                        <rect x="175.3" y="1" width="149.4" height="44.87999999999998"></rect>
+                        <rect x="175.3" y="704.1199999999997" width="149.4" height="44.87999999999998"></rect>
+                        <line x1="1" x2="499" y1="374.99999999999983" y2="374.99999999999983"></line>
+                        <circle cx="250" cy="374.99999999999983" r="69.72000000000001"></circle>
+                        <circle cx="250" cy="83.27999999999996" r="69.72000000000001" clip-path="url(#cut)"></circle>
+                        <circle cx="250" cy="666.7199999999997" r="69.72000000000001" clip-path="url(#cut)"></circle>
+                    </g>
+                </svg>
+
+                <% for( var a = 0; a < home_team.items.length; a++) {%>
+                    <% if (home_team.items[a].active) { %>
+                        <div class="pitch-player home_team" style="left: <%= home_team.items[a].offset.left * 100 %>%; top: <%= home_team.items[a].offset.top * 100 %>%;"><%= home_team.items[a].number %></div>
+                    <% } %>
+                <% } %>
+
+                <% for( var b = 0; b < quest_team.items.length; b++) {%>
+                    <% if (quest_team.items[b].active) { %>
+                        <div class="pitch-player quest_team" style="left: <%= quest_team.items[b].offset.left * 100 %>%; top: <%= quest_team.items[b].offset.top * 100 %>%;"><%= quest_team.items[b].number %></div>
+                    <% } %>
+                <% } %>
+
+            </div>
+        </div>
+
+        <div class="break-after">
+            <h3 class="mt"><%= home_team.team_name %> players</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th width="50" class="text-right">№</th>
+                        <th width="70%">Name</th>
+                        <th width="30%">Position</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for( var c = 0; c < home_team.items.length; c++) {%>
+                        <tr>
+                            <td class="text-right"><%= home_team.items[c].number %></td>
+                            <td><%= home_team.items[c].name %></td>
+                            <td><%= home_team.items[c].position %></td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="break-after">
+            <h3 class="mt"><%= quest_team.team_name %> players</h3>
+            <table>
+                <thead>
+                <tr>
+                    <th width="50" class="text-right">№</th>
+                    <th width="70%">Name</th>
+                    <th width="30%">Position</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <% for( var d = 0; d < quest_team.items.length; d++) {%>
+                        <tr>
+                            <td class="text-right"><%= quest_team.items[d].number %></td>
+                            <td><%= quest_team.items[d].name %></td>
+                            <td><%= quest_team.items[d].position %></td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+
+        <% for( var e = 0; e < home_team.groups.length; e++) {%>
+            <div class="break-after">
+                <% if (e === 0) { %>
+                    <h2><%= home_team.team_name %></h2>
+                <% } %>
+
+                <% for( var f = 0; f < home_team.groups[e].length; f++) {%>
+                    <div class="player-profile">
+                        <h2><%= home_team.groups[e][f].name %></h2>
+                        <hr>
+                        <div class="mt">
+                            <div><b>Number: </b><%= home_team.groups[e][f].number %></div>
+                            <div><b>Position: </b><%= home_team.groups[e][f].position %></div>
+                        </div>
+                        <div class="mt">
+                            <div><b>Comment:</b></div>
+                            <div><%= home_team.groups[e][f].values[3].value %></div>
+                        </div>
+                        <table>
+                            <thead>
+                            <tr>
+                                <th width="20%">Goal</th>
+                                <th width="20%">Pass</th>
+                                <th width="20%">Tackle</th>
+                                <th width="20%">Technique</th>
+                                <th width="20%">Speed</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <% for( var g = 0; g < home_team.groups[e][f].values.length; g++) {%>
+                                    <% if (home_team.groups[e][f].values[g].name !== 'comment') { %>
+                                        <% if (home_team.groups[e][f].values[g].value == 0) { %>
+                                            <td>--</td>
+                                        <% } else if (home_team.groups[e][f].values[g].value == 1) { %>
+                                            <td>-</td>
+                                        <% } else if (home_team.groups[e][f].values[g].value == 2) { %>
+                                            <td>0</td>
+                                        <% } else if (home_team.groups[e][f].values[g].value == 3) { %>
+                                            <td>+</td>
+                                        <% } else if (home_team.groups[e][f].values[g].value == 3) { %>
+                                        <%  %>
+                                            <td>++</td>
+                                        <% } else { %>
+                                            <td>&nbsp;</td>
+                                        <% } %>
+                                    <% } %>
+                                <% } %>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                <% } %>
+
+            </div>
+        <% } %>
+
+        <% for( var h = 0; h < quest_team.groups.length; h++) {%>
+            <div class="break-after">
+                <% if (h === 0) { %>
+                    <h2><%= home_team.team_name %></h2>
+                <% } %>
+
+                <% for( var i = 0; i < quest_team.groups[h].length; i++) {%>
+                    <div class="player-profile">
+                        <h2><%= quest_team.groups[h][i].name %></h2>
+                        <hr>
+                        <div class="mt">
+                            <div><b>Number: </b><%= quest_team.groups[h][i].number %></div>
+                            <div><b>Position: </b><%= quest_team.groups[h][i].position %></div>
+                        </div>
+                        <div class="mt">
+                            <div><b>Comment:</b></div>
+                            <div><%= quest_team.groups[h][i].values[3].value %></div>
+                        </div>
+                        <table>
+                            <thead>
+                            <tr>
+                                <th width="20%">Goal</th>
+                                <th width="20%">Pass</th>
+                                <th width="20%">Tackle</th>
+                                <th width="20%">Technique</th>
+                                <th width="20%">Speed</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <% for( var j = 0; j < quest_team.groups[h][i].values.length; j++) {%>
+                                    <% if (quest_team.groups[h][i].values[j].name !== 'comment') { %>
+                                        <% if (quest_team.groups[h][i].values[j].value == 0) { %>
+                                            <td>--</td>
+                                        <% } else if (quest_team.groups[h][i].values[j].value == 1) { %>
+                                            <td>-</td>
+                                        <% } else if (quest_team.groups[h][i].values[j].value == 2) { %>
+                                            <td>0</td>
+                                        <% } else if (quest_team.groups[h][i].values[j].value == 3) { %>
+                                            <td>+</td>
+                                        <% } else if (quest_team.groups[h][i].values[j].value == 3) { %>
+                                        <%  %>
+                                            <td>++</td>
+                                        <% } else { %>
+                                            <td>&nbsp;</td>
+                                        <% } %>
+                                    <% } %>
+                                <% } %>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                <% } %>
+
+            </div>
+        <% } %>
+
+</body>
+</html>

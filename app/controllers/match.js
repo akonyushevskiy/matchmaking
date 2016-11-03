@@ -17,8 +17,9 @@ export function getMatch(req, res) {
 }
 
 export function updateMatch(req, res) {
-
 	const addValues = (item, key) => {
+		item.reserve = false;
+		item.active = false;
 		item.number = key + 1;
 		item.offset = {
 			left: null,
@@ -55,8 +56,6 @@ export function updateMatch(req, res) {
 
 	const { match_id, ...update } = req.body;
 
-	console.log(update);
-
 	let promises = [];
 
 	promises.push(
@@ -68,9 +67,6 @@ export function updateMatch(req, res) {
 			new: true
 		})
 	);
-
-	console.log(typeof update.home_team);
-	console.log(typeof update.home_team);
 
 	if (typeof update.home_team === 'number') {
 		promises.push(

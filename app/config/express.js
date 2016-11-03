@@ -20,6 +20,8 @@ module.exports = function () {
 		app.use(compress());
 	}
 
+	app.set('view engine', 'ejs');
+
 	app.use(bodyParser.urlencoded({
 		extended: true
 	}));
@@ -54,6 +56,7 @@ module.exports = function () {
 	require('../routes/add-match')(app);
 	require('../routes/teams')(app);
 	require('../routes/match')(app);
+	require('../routes/pdf')(app);
 
 	return app;
 };

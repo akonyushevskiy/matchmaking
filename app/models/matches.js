@@ -6,8 +6,7 @@ const MatchesScheme = new Schema({
 	date: Date,
 	location: String,
 	home_team: Object,
-	quest_team: Object,
-	note: String
+	quest_team: Object
 });
 
 MatchesScheme.statics.getMatches = function() {

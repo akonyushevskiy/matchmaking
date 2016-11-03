@@ -1,5 +1,6 @@
-var matches = require('../controllers/matches');
+import { getMatches, deleteMatch } from './../controllers/matches';
 
 module.exports = function (app) {
-	app.get('/matches', matches);
+	app.get('/matches', getMatches);
+	app.delete('/matches', deleteMatch);
 };

@@ -1,6 +1,6 @@
 var	Matches = require('mongoose').model('Matches');
 
-module.exports = function (req, res) {
+export function getMatches(req, res) {
 	Promise
 		.all([
 			Matches.getMatches()
@@ -9,4 +9,10 @@ module.exports = function (req, res) {
 			res.json({ matches })
 		})
 		.catch(error => { console.log(error) });
-};
+}
+
+export function deleteMatch(req, res) {
+	Matches.findOne({ _id: req.query.id}).remove(function (...params) {
+		getMatches(req, res);
+	});
+}
