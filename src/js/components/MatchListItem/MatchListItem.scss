@@ -11,11 +11,11 @@
 		position: relative;
 		display: block;
 		color: $color_Black;
-		padding: 30px 30px 30px 150px;
-		margin-right: 238px;
+		padding: 25px 15px 25px 145px;
+		margin-right: 326px;
 
 		.logos {
-			@include position(absolute, 21px none 0 30px);
+			@include position(absolute, 15px none 0 25px);
 
 			img {
 				max-width: 60px;
@@ -38,6 +38,7 @@
 			text-overflow: ellipsis;
 			display: block;
 			padding-bottom: 10px;
+			white-space: nowrap;
 		}
 
 		.desc {
@@ -46,6 +47,7 @@
 			overflow: hidden;
 			text-overflow: ellipsis;
 			display: block;
+			white-space: nowrap;
 		}
 
 		&:hover {
@@ -59,10 +61,10 @@
 		@include position(absolute, 0 0 0 none);
 
 		.control {
-			width: 119px;
-			height: 118px;
+			width: 109px;
+			height: 108px;
 			text-align: center;
-			line-height: 118px;
+			line-height: 108px;
 			float: left;
 			border-left: 1px solid #1D2429;
 			display: block;

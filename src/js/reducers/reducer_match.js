@@ -16,10 +16,7 @@ export default function (state = INITIAL_STATE, action) {
 			};
 		case UPDATE_MATCH_TEAM:
 			const team = action.payload;
-			return {
-				...state,
-				...team
-			};
+			return { ...state, ...team };
 		default:
 			return state;
 	}

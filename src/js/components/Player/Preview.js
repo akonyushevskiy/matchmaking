@@ -1,8 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import DragLayer from 'react-dnd/lib/DragLayer';
 
-import Icon from '../Icon.js';
-
 function collect (monitor) {
 	return {
 		clientOffset: monitor.getClientOffset()
@@ -17,6 +15,7 @@ class DragPreview extends Component {
 			position: 'fixed',
 			left: 0,
 			top: 0,
+			zIndex: 100,
 			transform: clientOffset ? `translate(${clientOffset.x}px, ${clientOffset.y}px)` : ''
 		};
 	}

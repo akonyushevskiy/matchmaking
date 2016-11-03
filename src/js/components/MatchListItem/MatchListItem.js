@@ -8,13 +8,13 @@ import { connect } from 'react-redux';
 import Icon from '../Icon.js';
 import MatchEdit from '../MatchEdit/MatchEdit';
 
-import { updateMatch } from '../../actions/index';
+import { updateMatch, deleteMatch } from '../../actions/index';
 
 class MatchListItem extends Component {
 
 	constructor () {
 		super();
-		this.state = { edit: false }
+		this.state = { edit: false, loading: false }
 	}
 
 	onSubmit (match) {
@@ -33,12 +33,20 @@ class MatchListItem extends Component {
 			saveData.quest_team = quest_team;
 		}
 
-		this.props.updateMatch({ ...saveData });
-		this.setState({ edit: !this.state.edit });
+		this.setState({ loading: true });
+		this.props.updateMatch({ ...saveData }).then(() => {
+			this.setState({ edit: !this.state.edit, loading: false });
+		});
 	}
 
 	toogleActive () {
 		this.setState({ edit: !this.state.edit });
+	}
+
+	deleteHandler () {
+		const { match, deleteMatch } = this.props;
+		this.setState({ loading: true });
+		deleteMatch({ id: match._id });
 	}
 
 	render () {
@@ -51,27 +59,30 @@ class MatchListItem extends Component {
 						onSubmit={ this.onSubmit.bind(this) }
 						onCancel={ this.toogleActive.bind(this) }
 						title="Edit match"
+						btn="Save"
 						match={{ ...match }}
-						/>
+						loading={ this.state.loading }
+					/>
 				);
 			} else {
 				return (
 					<div className="info">
 						<Link to={ `/match/${match._id}` } className="link">
-						<span className="logos">
-							<img src={ `./images/${ match.home_team.team_id }.jpg` } alt=""/>
-							<img src={ `./images/${ match.quest_team.team_id }.jpg` } alt=""/>
-						</span>
-						<span className="name">
-							{ `${ match.home_team.team_name } – ${ match.quest_team.team_name }` }
-						</span>
-						<span className="desc">
-							{ `${ match.home_team.stadion_name }, ${ match.location } | ${ moment(match.date).format('DD.MM.YYYY HH:MM') }` }
-						</span>
+							<span className="logos">
+								<img src={ `./images/${ match.home_team.team_id }.jpg` } alt=""/>
+								<img src={ `./images/${ match.quest_team.team_id }.jpg` } alt=""/>
+							</span>
+							<span className="name">
+								{ `${ match.home_team.team_name } – ${ match.quest_team.team_name }` }
+							</span>
+							<span className="desc">
+								{ `${ match.home_team.stadion_name }, ${ match.location } | ${ moment(match.date).format('DD.MM.YYYY HH:mm') }` }
+							</span>
 						</Link>
 						<div className="controls">
-							<a className="control edit" onClick={ this.toogleActive.bind(this) }><Icon name="pencil" /></a>
-							<a className="control export"><Icon name="pdf" /></a>
+							<a className="control" onClick={ this.deleteHandler.bind(this) }><Icon name="remove" /></a>
+							<a className="control" onClick={ this.toogleActive.bind(this) }><Icon name="pencil" /></a>
+							<Link className="control" to={ `/export/${match._id}` }><Icon name="pdf" /></Link>
 						</div>
 					</div>
 				);
@@ -90,4 +101,4 @@ function mapStateToProps(state) {
 	return { matches: state.matches };
 }
 
-export default connect(mapStateToProps, { updateMatch })(MatchListItem);
+export default connect(mapStateToProps, { updateMatch, deleteMatch })(MatchListItem);

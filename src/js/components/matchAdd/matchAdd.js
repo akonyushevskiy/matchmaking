@@ -10,18 +10,27 @@ import MatchEdit from '../MatchEdit/MatchEdit';
 import { fetchAddMatch } from '../../actions/index';
 
 class MatchAdd extends Component {
+	static contextTypes = {
+		router: PropTypes.object
+	};
 
 	constructor () {
 		super();
-		this.state = { edit: false }
+		this.state = { edit: false, loading: false }
 	}
 
 	onSubmit (match) {
+
+		this.setState({ loading: true });
+
 		this.props.fetchAddMatch({
 			date: moment(`${match.date} ${match.start}`, "DD.MM.YYYY HH:mm").format(),
 			location: match.location,
 			home_team: match.home_team,
 			quest_team: match.quest_team
+		}).then((data) => {
+			this.setState({ loading: false });
+			this.context.router.push(`/match/${data.payload.data.match._id}`);
 		});
 	}
 
@@ -37,6 +46,8 @@ class MatchAdd extends Component {
 						onSubmit={ this.onSubmit.bind(this) }
 						onCancel={ this.toogleActive.bind(this) }
 						title="Add new match"
+						btn="Go"
+						loading={ this.state.loading }
 					/>
 				);
 			} else {

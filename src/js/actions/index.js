@@ -8,8 +8,9 @@ export const FETCH_TEAMS = "FETCH_TEAMS";
 export const FETCH_ADD_MATCH = "FETCH_ADD_MATCH";
 export const UPDATE_MATCH_TEAM = "UPDATE_MATCH_TEAM";
 export const UPDATE_MATCH = "UPDATE_MATCH";
+export const DELETE_MATCH = "DELETE_MATCH";
 
-var ROOT_URL = 'http://localhost:8080';
+export var ROOT_URL = 'http://localhost:8080';
 
 if (process.env.NODE_ENV !== 'production') {
 	ROOT_URL = 'http://localhost:8080';
@@ -40,6 +41,17 @@ export function fetchMatches(props) {
 
 	return {
 		type: FETCH_MATCHES,
+		payload: request
+	}
+}
+
+export function deleteMatch(props) {
+	const  request = axios.delete(`${ROOT_URL}/matches`, {
+		params: props
+	});
+
+	return {
+		type: DELETE_MATCH,
 		payload: request
 	}
 }
@@ -80,15 +92,13 @@ export function updateMatch(props) {
 export function updateMatchTeam(props) {
 	axios.post(`${ROOT_URL}/match/`, {
 		...props
-	}).then(data => {
-		console.log(data);
 	});
 
 	delete props['match_id'];
 
 	return {
 		type: UPDATE_MATCH_TEAM,
-		payload: props
+		payload: Promise.resolve(props)
 	}
 }
 

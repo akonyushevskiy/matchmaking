@@ -1,0 +1,53 @@
+@import "../../../styles/exports";
+
+@include keyframes(preview-start) {
+	from {
+		@include transform(scale(1));
+	}
+	to {
+		@include transform(scale(1.1));
+	}
+}
+
+.player-preview {
+	width: 40px;
+	height: 40px;
+	margin: -20px 0 0 -20px;
+	position: fixed;
+	left: 0;
+	top: 0;
+	border-radius: 50%;
+
+	&:before {
+		content: '';
+		border-radius: 50%;
+		border: 1px solid #242F3A;
+		@include position(absolute, 0);
+		@include transform(scale(1.1));
+		@include animation(preview-start .2s linear);
+	}
+
+	.circle {
+		position: relative;
+		color: $color_Black;
+		font-weight: 300;
+		text-align: center;
+		font-size: 24px;
+		line-height: 38px;
+		display: block;
+		width: 40px;
+		height: 40px;
+	}
+
+	&.home_team {
+		&:before {
+			background: #fff;
+		}
+	}
+
+	&.quest_team {
+		&:before {
+			background: $color_Green;
+		}
+	}
+}

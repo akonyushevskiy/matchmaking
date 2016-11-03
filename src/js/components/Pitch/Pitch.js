@@ -8,62 +8,75 @@ import { connect } from 'react-redux';
 
 import { updateMatchTeam } from '../../actions/index';
 
-import Controls from './PitchControls.js';
 import Field from './PitchField.js';
+import Player from './PitchPlayer.js';
+import Controls from './PitchControls.js';
+import PlayerDragPreview from './../Players/PlayerDragPreview.js';
 
 const Types = {
 	PLAYER: 'player'
 };
 
+const aspect = 0.666666666666667;
+const margin = {
+	top: 20,
+	right: 20,
+	bottom: 20,
+	left: 20
+};
+
 const getPitchSize = () => {
-	const aspect = 0.666666666666667;
-	const margin = 20;
-	const width = window.innerWidth/2;
-	const height = window.innerHeight;
+	const width = window.innerWidth/2 - margin.left - margin.right;
+	const height = window.innerHeight - margin.top - margin.bottom;
 
 	if (width > height * aspect) {
 		return {
-			width: height * aspect - margin * 2,
-			height: height - margin * 2
+			width: height * aspect,
+			height: height
 		};
 	} else {
 		return {
-			width: width - margin * 2,
-			height: width / aspect - margin * 2
+			width: width,
+			height: width / aspect
 		};
 	}
 };
 
 const Target = {
 	drop(props, monitor, component) {
+		const { player, team_name } = monitor.getItem();
+		const { width, height } = component.state;
+		const PitchX = window.innerWidth / 2 - width - margin.right;
+		const PitchY = (window.innerHeight - height) / 2;
+		const { x, y } = monitor.getClientOffset();
+		const [ left, top ] = [(x - window.innerWidth / 2 - PitchX) / width, (y - PitchY) / height];
 
-		const { player, team } = monitor.getItem();
+		var toSave = { };
+			toSave['match_id'] = props.params.match_id;
+			toSave[team_name] = _.cloneDeep(props.match[team_name]);
 
-		if (!player.active) {
-			const { width, height } = component.state;
-			const PitchX = (window.innerWidth / 2 - width) / 2;
-			const PitchY = (window.innerHeight - height) / 2;
-			const { x, y } = monitor.getClientOffset();
-			const [ left, top ] = [(x - window.innerWidth / 2 - PitchX) / width, (y - PitchY) / height];
-			const selectedTeam = _.cloneDeep(props.match[team]);
-			const toSave = { match_id: props.params.match_id };
-
-			selectedTeam.items = selectedTeam.items.map((item) => {
-				if (item.number === player.number) {
+		toSave[team_name].items = toSave[team_name].items.map((item) => {
+			if (item.number === player.number) {
+				if (left >=0 && left <= 1 && top >=0 && top <= 1) {
 					item.active = true;
-					item.offset = {left, top}
+					item.offset = { left, top };
+				} else {
+					item.active = false;
+					item.offset = { left: null, top: null };
 				}
-				return item;
-			});
+			}
+			return item;
+		});
 
-			toSave[team] = selectedTeam;
-			props.updateMatchTeam({...toSave});
-		}
+		props.updateMatchTeam({...toSave});
 	}
 };
 
-class Pitch extends Component {
+@DropTarget(Types.PLAYER, Target, (connect, monitor) => ({
+	connectDropTarget: connect.dropTarget()
+}))
 
+export default class Pitch extends Component {
 	static propTypes = {
 		connectDropTarget: PropTypes.func.isRequired
 	};
@@ -72,11 +85,10 @@ class Pitch extends Component {
 		super();
 
 		const { width, height } = getPitchSize();
-		const [ playerControls, activeInner, activeOuter, activeTeam, comment, commentActive ] = [null, false, false, null, '', false];
-
+		const [ playerControls, activeInner, activeOuter, activeTeam, comment, commentActive ] = [ null, false, false, null, '', false ];
 		this.state = { width, height, playerControls, activeInner, activeOuter, activeTeam, comment, commentActive };
-
 		this.resizeHandler = this.resizeHandler.bind(this);
+		this.hiderControls = this.hiderControls.bind(this);
 	}
 
 	resizeHandler() {
@@ -84,194 +96,116 @@ class Pitch extends Component {
 		this.setState({ width, height });
 	}
 
-	renderPlayers(team) {
-
-		const { width, height } = this.state;
-
-		const clickHandler = (key, event) => {
-			event.stopPropagation();
-
-			this.setState({
-				playerControls: key,
-				activeInner: true,
-				activeTeam: team,
-				activeOuter: false,
-				commentActive: false
-			});
-		};
-
-		const clickInnerControlHandler = (player, control) => {
-			this.setState({
-				activeOuter: control,
-				commentActive: false
-			});
-		};
-
-		const clickOuterControlHandler = (player, value) => {
-			const selectedTeam = _.cloneDeep(this.props.match[team]);
-
-			selectedTeam.items[player].values[this.state.activeOuter].value = value;
-
-			const toSave = {
-				match_id: this.props.params.match_id
-			};
-
-			toSave[team] = selectedTeam;
-
-			this.props.updateMatchTeam({...toSave});
-		};
-
-		const onAddComment = (comment) => {
-			this.setState({
-				commentActive: true,
-				activeOuter: false,
-				comment
-			})
-		};
-
-		return this.props.match[team].items.map((player, key) => {
-			if (!player.active) return null;
-
-			return (
-				<g
-					key= {key}
-					className={ `pitch-player ${team}`}
-					data-team={ team }
-					data-player={ key }
-					transform= {`translate(${width * player.offset.left}, ${height * player.offset.top})`}
-				>
-					<circle r="20" onClick={ clickHandler.bind(this, key) } />
-					<text transform={`translate(0, 8)`}>{ player.number }</text>
-					{
-						(key === this.state.playerControls && team === this.state.activeTeam) &&
-						<Controls
-							controls={ player.values }
-							{ ...this.state }
-							onClickInner={ clickInnerControlHandler.bind(this, key) }
-							onClickOuter={ clickOuterControlHandler.bind(this, key) }
-							onAddComment={ onAddComment.bind(this) }
-							/>
-					}
-				</g>
-			)
-		});
-	}
-
-	initDragEvents() {
-		const { width, height } = this.state;
-
-		var pressTimer;
-		var pressActive = false;
-
-		const dragPitchPlayers = d3.drag()
-			.on('start', (event, i, list) => {
-				const animateCircle = () => pressActive && d3.select(list[i]).select('circle').transition().duration(200).attr('r', 25);
-				setTimeout(() => {
-					animateCircle();
-				}, 500);
-			})
-			.on("drag", (event, i, list) => {
-				pressActive && d3.select(list[i]).attr('transform', `translate(${d3.event.x}, ${d3.event.y})`)
-			})
-			.on("end", (event, i, list) => {
-				if (pressActive) {
-					const $player = d3.select(list[i]);
-					const team = $player.attr('data-team');
-					const player_key = parseInt($player.attr('data-player'));
-					const [ left, top ] = [d3.event.x / width, d3.event.y / height];
-					const selectedTeam = _.cloneDeep(this.props.match[team]);
-					const toSave = { match_id: this.props.params.match_id };
-
-					$player.select('circle').transition().duration(200).attr('r', 20);
-
-					if (left > 0 && left < 1 && top > 0 && top < 1) {
-						selectedTeam.items[player_key].offset = {left, top};
-						selectedTeam.items[player_key].active = true;
-					} else {
-						selectedTeam.items[player_key].offset = { left: null, top: null };
-						selectedTeam.items[player_key].active = false;
-					}
-
-					toSave[team] = selectedTeam;
-					this.props.updateMatchTeam({...toSave});
-				}
-
-				pressActive = false;
-				clearTimeout(pressTimer);
-			});
-
-		d3.selectAll(".pitch-player")
-			.on('mousedown', () => {
-				pressTimer = window.setTimeout(() => {
-					pressActive = true;
-				}, 500);
-			})
-			.on('mouseout', () => {
-				if (!pressActive) {
-					clearTimeout(pressTimer);
-				}
-			})
-			.on('touchstart', (event) => {
-				pressTimer = window.setTimeout(() => {
-					pressActive = true;
-				}, 500);
-			})
-			.on("touchmove", (event) => {
-				d3.event.preventDefault();
-				if (!pressActive) {
-					clearTimeout(pressTimer);
-				}
-			});
-
-
-		d3.selectAll(".pitch-player").call(dragPitchPlayers);
-	}
-
-	componentDidMount() {
-		this.initDragEvents();
-
-		window.addEventListener('resize', this.resizeHandler);
-	}
-
-	componentDidUpdate() {
-		this.initDragEvents();
-	}
-
-	componentWillUnmount() {
-		d3.selectAll(".pitch-player")
-			.on('mousedown', null)
-			.on('mouseout', null);
-
-		window.removeEventListener('resize', this.resizeHandler);
-	}
-
-	svgClickHandler () {
+	hiderControls () {
 		const [ playerControls, activeInner, activeOuter, activeTeam, commentActive ] = [null, false, false, null, false];
 		this.setState({ playerControls, activeInner, activeOuter, activeTeam, commentActive });
 	}
 
+	componentDidMount() {
+		window.addEventListener('click', this.hiderControls);
+		window.addEventListener('resize', this.resizeHandler);
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener('click', this.hiderControls);
+		window.removeEventListener('resize', this.resizeHandler);
+	}
+
+	renderPlayers(team_name) {
+		return this.props.match[team_name].items.map((player, key) => {
+			if (!player.active) return null;
+
+			const openControl = () => {
+				if (this.state.playerControls && this.state.playerControls === key) {
+					this.hiderControls();
+				} else {
+					this.setState({
+						playerControls: key,
+						activeInner: true,
+						activeTeam: team_name,
+						activeOuter: false,
+						commentActive: false
+					});
+				}
+			};
+
+			const clickIn = (control) => {
+				this.setState({
+					activeOuter: control,
+					commentActive: false
+				});
+			};
+
+			const clickOut = (value) => {
+				var toSave = {};
+					toSave['match_id'] = this.props.params.match_id;
+					toSave[team_name] = _.cloneDeep(this.props.match[team_name]);
+					toSave[team_name].items[key].values[this.state.activeOuter].value = value;
+
+				setTimeout(() => {
+					this.setState({
+						activeOuter: false
+					});
+				}, 1000);
+
+				this.props.updateMatchTeam({...toSave});
+			};
+
+			const onAddComment = (comment) => {
+				this.setState({
+					commentActive: true,
+					activeOuter: false,
+					comment
+				})
+			};
+
+			const controlActive = (key === this.state.playerControls && team_name === this.state.activeTeam);
+
+			const renderControls = () => {
+				if (!controlActive) { return null; }
+
+				return (
+					<Controls controls={ player.values } { ...this.state } onClickInner={ clickIn.bind(this) } onClickOuter={ clickOut.bind(this) } onAddComment={ onAddComment.bind(this) } />
+				)
+			};
+
+			const removePlayerFromPitch = (player, team_name) => {
+				var toSave = {};
+					toSave['match_id'] = this.props.params.match_id;
+					toSave[team_name] = _.cloneDeep(this.props.match[team_name]);
+					toSave[team_name].items[key].active = false;
+					toSave[team_name].items[key].offset = { left: null, top: null };
+
+				this.props.updateMatchTeam({...toSave});
+			};
+
+			const toProps = { key, team_name, player };
+
+			return (
+				<Player className={ controlActive ? 'active' : '' } {...toProps} activeOuter={ this.state.activeOuter } controlActive={ controlActive } openControl={ openControl.bind(this) } removePlayerFromPitch={ removePlayerFromPitch.bind(this) }>
+					{ renderControls() }
+				</Player>
+			);
+		});
+	}
+
 	onCommentChange(comment) {
-		this.setState({comment});
+		this.setState({comment: comment});
 	}
 
 	saveComment() {
 		const { match, params, updateMatchTeam } = this.props;
 		const { activeTeam, playerControls, comment } = this.state;
-		const selectedTeam = _.cloneDeep(match[activeTeam]);
 
-
-		selectedTeam.items[playerControls].values.map((value, key) => {
-			if (value.name === 'comment') {
-				return value.value = comment;
-			}
-			return value;
-		});
-
-		const toSave = {
-			match_id: params.match_id
-		};
-
-		toSave[activeTeam] = selectedTeam;
+		var toSave = {};
+			toSave['match_id'] = params.match_id;
+			toSave[activeTeam] = _.cloneDeep(match[activeTeam]);
+			toSave[activeTeam].items[playerControls].values = toSave[activeTeam].items[playerControls].values.map((value, key) => {
+				if (value.name === 'comment') {
+					value.value = comment;
+				}
+				return value;
+			});
 
 		updateMatchTeam({...toSave});
 
@@ -282,43 +216,29 @@ class Pitch extends Component {
 
 	renderComment () {
 		return (
-			<div className={ `pitch-comment ${this.state.commentActive ? 'active' : ''}` }>
-				<input className="input" type="text" placeholder="Type here..." value={this.state.comment} onChange={event => this.onCommentChange(event.target.value)} />
+			<div className={ `pitch-comment ${this.state.commentActive ? 'active' : ''}` } onClick={ event => { event.stopPropagation() }}>
+				<input className="input" type="text" placeholder="Type here..." value={ this.state.comment } onChange={event => this.onCommentChange(event.target.value)} />
 				<button className="btn btn-green" onClick={ this.saveComment.bind(this) }>Save</button>
 			</div>
 		);
 	}
 
 	render () {
-
 		const { connectDropTarget } = this.props;
 		const { width, height } = this.state;
-
-		const x = (window.innerWidth / 2 - width) / 2;
+		const x = window.innerWidth / 2 - width - margin.right;
 		const y = (window.innerHeight - height) / 2;
 
 		return connectDropTarget(
-			<div
-				className="pitch"
-				style={{ left: x, top: y, height, width }}
-				>
-				<svg className="pitch-svg" ref="svg" onClick={ this.svgClickHandler.bind(this) }>
+			<div className="pitch" style={{ left: x, top: y, height, width }} >
+				<svg className="pitch-svg" ref="svg">
 					<Field width={ this.state.width } height={ this.state.height } />
-					{ this.renderPlayers('home_team') }
-					{ this.renderPlayers('quest_team') }
 				</svg>
+				{ this.renderPlayers('home_team') }
+				{ this.renderPlayers('quest_team') }
 				{ this.renderComment() }
+				<PlayerDragPreview></PlayerDragPreview>
 			</div>
 		)
 	}
 }
-
-function mapStateToProps(state) {
-	return { match: state.match };
-}
-
-const initDragAndDrop = DropTarget(Types.PLAYER, Target, (connect, monitor) => ({
-	connectDropTarget: connect.dropTarget()
-}))(Pitch);
-
-export default connect(mapStateToProps, { updateMatchTeam })(initDragAndDrop);

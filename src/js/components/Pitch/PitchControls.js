@@ -133,8 +133,9 @@ export default class Controls extends Component {
 			switch (key) {
 				case 0: return '––';
 				case 1: return '–';
-				case 2: return '+';
-				case 3: return '++';
+				case 2: return '0';
+				case 3: return '+';
+				case 4: return '++';
 			}
 		};
 
@@ -144,7 +145,7 @@ export default class Controls extends Component {
 		};
 
 		if (this.props.activeOuter || this.props.activeOuter === 0) {
-			return pieOuter(this.props.activeOuter)([0,1,2,3]).map((control, key) => {
+			return pieOuter(this.props.activeOuter)([0,1,2,3,5]).map((control, key) => {
 				return (
 					<g className={ `control-outer ${ this.props.controls[this.props.activeOuter].value === key ? 'active' : ''}` } key={ key } >
 						<path onClick={ outerClick.bind(this, key) } className="section" d={ arcOuter(control) }></path>

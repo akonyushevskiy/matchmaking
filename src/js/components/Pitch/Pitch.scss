@@ -2,7 +2,6 @@
 
 .pitch {
 	position: absolute;
-	z-index: 100;
 
 	.pitch-svg {
 		@include position(absolute, 0 none none 0);
@@ -31,32 +30,64 @@
 	}
 
 	.pitch-player {
-		cursor: pointer;
+		position: absolute;
+		margin: -20px 0 0 -20px;
+		line-height: 38px;
 
-		circle {
-			stroke-width: 2px;
-			stroke: #1D2429;
+		&.active {
+			z-index: 1;
 		}
 
-		text {
-			fill: $color_Black;
+		&:before {
+			content: '';
+			border-radius: 50%;
+			border: 1px solid #1D2429;
+			display: block;
+			@include position(absolute, 0);
+			@include transform(scale(1));
+			@include transition(transform .2s linear);
+		}
+
+		.number {
+			width: 40px;
+			height: 40px;
+			color: $color_Black;
 			font-weight: 300;
-			text-align: center;
-			text-anchor: middle;
 			font-size: 24px;
-			pointer-events: none;
-			user-select: none;
+			text-align: center;
+			display: block;
+			@include user-select(none);
+			cursor: default;
+			position: relative;
 		}
 
 		&.home_team {
-			circle {
-				fill: #ffff;
+			&:before {
+				background: #fff;
 			}
 		}
 
 		&.quest_team {
-			circle {
-				fill: $color_Green;
+			&:before {
+				background: $color_Green;
+			}
+		}
+
+		.dragg {
+			&:before {
+				@include transform(scale(1.1));
+			}
+		}
+
+		svg {
+			width: 350px;
+			height: 350px;
+			margin: -175px 0 0 -175px;
+			@include position(absolute, 50% none none 50%);
+			pointer-events: none;
+
+			path {
+				pointer-events: auto;
 			}
 		}
 	}
@@ -105,6 +136,8 @@
 		text {
 			fill: #fff;
 			font-size: 31px;
+			text-align: center;
+			text-anchor: middle;
 		}
 
 		&.active {

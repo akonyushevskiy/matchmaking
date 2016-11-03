@@ -1,4 +1,5 @@
 import './MatchEdit.scss';
+import './react-datepicker.scss';
 
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
@@ -6,6 +7,7 @@ import Select from 'react-select';
 import { Field, reduxForm } from 'redux-form';
 import MaskedInput from 'react-maskedinput';
 import moment from 'moment';
+import DatePicker from 'react-datepicker';
 
 import { fetchTeams } from '../../actions/index';
 
@@ -36,6 +38,10 @@ const fieldInput = ({input, ...rest}) => {
 	return <MaskedInput {...input} {...rest} className={ `input ${rest.meta.touched && rest.meta.error ? 'no-valid' : ''}` } />
 };
 
+const fieldDatePicker = ({input, ...rest}) => {
+	return <DatePicker {...input} {...rest} dateFormat="DD.MM.YYYY"  selected={ moment(input.value, "DD.MM.YYYY") } />
+};
+
 
 class MatchEdit extends Component {
 
@@ -52,6 +58,11 @@ class MatchEdit extends Component {
 
 	onCancel() {
 		this.props.onCancel();
+	}
+
+	renderLoader() {
+		if (!this.props.loading) { return null; }
+		return <div className="match-edit-loader" />;
 	}
 
 	render () {
@@ -74,7 +85,7 @@ class MatchEdit extends Component {
 						</fieldset>
 						<fieldset className="fieldset--1-3">
 							<label>Date</label>
-							<Field className="input" name="date" mask="11.11.1111" component={ fieldInput } type="text" placeholder="Enter match date…"/>
+							<Field className="input" name="date" mask="11.11.1111" component={ fieldDatePicker } placeholder="Enter match date…"/>
 						</fieldset>
 						<fieldset className="fieldset--1-3">
 							<label>Starts at</label>
@@ -90,10 +101,11 @@ class MatchEdit extends Component {
 							<a href="#" onClick={ this.onCancel.bind(this) } className="btn btn-block">Cancel</a>
 						</fieldset>
 						<fieldset className="fieldset--1-2">
-							<button type="submit" className="btn btn-green btn-block">Go</button>
+							<button type="submit" className="btn btn-green btn-block">{ props.btn }</button>
 						</fieldset>
 					</div>
 				</div>
+				{ this.renderLoader() }
 			</form>
 		)
 	}
@@ -120,7 +132,11 @@ function mapStateToProps(state, props) {
 	if (!props.match) {
 		return {
 			teams: state.teams,
-			form: 'addMatch'
+			form: 'addMatch',
+			initialValues: {
+				date: moment().format('DD.MM.YYYY'),
+				start: '20:00'
+			}
 		};
 	}
 
@@ -133,7 +149,7 @@ function mapStateToProps(state, props) {
 			home_team: parseInt(home_team.team_id),
 			quest_team: parseInt(quest_team.team_id),
 			date: moment(date).format('DD.MM.YYYY'),
-			start: moment(date).format('HH:MM'),
+			start: moment(date).format('HH:mm'),
 			location
 		}
 	};
