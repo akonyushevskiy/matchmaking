@@ -10,7 +10,7 @@ export const UPDATE_MATCH_TEAM = "UPDATE_MATCH_TEAM";
 export const UPDATE_MATCH = "UPDATE_MATCH";
 export const DELETE_MATCH = "DELETE_MATCH";
 
-var ROOT_URL = 'http://api.mm.konyushevskiy.com';
+export let ROOT_URL = 'http://api.mm.konyushevskiy.com';
 
 if (process.env.NODE_ENV !== 'production') {
 	ROOT_URL = 'http://localhost:8080';
