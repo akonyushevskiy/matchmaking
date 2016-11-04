@@ -106,7 +106,7 @@ class MatchEdit extends Component {
 							<a href="#" onClick={ this.onCancel.bind(this) } className="btn btn-block">Cancel</a>
 						</fieldset>
 						<fieldset className="fieldset--1-2">
-							<button type="submit" className="btn btn-green btn-block">{ props.btn }</button>
+							<button type="submit" className="btn btn-green btn-block">Save</button>
 						</fieldset>
 					</div>
 				</div>

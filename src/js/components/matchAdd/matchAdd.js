@@ -46,7 +46,7 @@ class MatchAdd extends Component {
 						onSubmit={ this.onSubmit.bind(this) }
 						onCancel={ this.toogleActive.bind(this) }
 						title="Add new match"
-						btn="Go"
+						btn="Save"
 						loading={ this.state.loading }
 					/>
 				);
