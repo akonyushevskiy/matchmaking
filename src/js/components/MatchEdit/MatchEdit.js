@@ -7,7 +7,12 @@ import Select from 'react-select';
 import { Field, reduxForm } from 'redux-form';
 import MaskedInput from 'react-maskedinput';
 import moment from 'moment';
-import DatePicker from 'react-datepicker';
+
+//TODO: add to webpack production config, read https://github.com/Hacker0x01/react-datepicker/issues/347
+//  module: {
+//    noParse: /\.min\.js/
+//  }
+import DatePicker from 'react-datepicker/dist/react-datepicker';
 
 import { fetchTeams } from '../../actions/index';
 
