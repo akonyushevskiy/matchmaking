@@ -23,8 +23,8 @@ exports.render = function (req, res) {
 		console.log(path.resolve(`${__dirname}/../views/pdf.ejs`));
 		console.log(path.resolve(`${__dirname}/../../files/match.pdf`));
 
-		res.render(path.resolve(`${__dirname}/../views/pdf.ejs`), match);
-		/*ejs.renderFile(path.resolve(`${__dirname}/../views/pdf.ejs`), match, {}, function(err, str){
+		/*res.render(path.resolve(`${__dirname}/../../app/views/pdf.ejs`), match);*/
+		ejs.renderFile(path.resolve(`${__dirname}/../../app/views/pdf.ejs`), match, {}, function(err, str){
 			pdf.create(str, {
 				"height": "1131px",
 				"width": "842px",
@@ -34,7 +34,7 @@ exports.render = function (req, res) {
 				res.download(data.filename);
 				console.log(res);
 			});
-		});*/
+		});
 	});
 
 };
