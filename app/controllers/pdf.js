@@ -23,26 +23,18 @@ exports.render = function (req, res) {
 		console.log(path.resolve(`${__dirname}/../views/pdf.ejs`));
 		console.log(path.resolve(`${__dirname}/../../files/match.pdf`));
 
-		/*res.render(`${__dirname}/../views/pdf.ejs`, match);*/
-		ejs.renderFile(path.resolve(`${__dirname}/../views/pdf.ejs`), match, {}, function(err, str){
+		res.render(`${__dirname}/../views/pdf.ejs`, match);
+		/*ejs.renderFile(path.resolve(`${__dirname}/../views/pdf.ejs`), match, {}, function(err, str){
 			pdf.create(str, {
 				"height": "1131px",
 				"width": "842px",
 				"border": "20px"
 			}).toFile(path.resolve(`${__dirname}/../../files/match.pdf`), function(err, data) {
 				if (err) return console.log(err);
-
 				res.download(data.filename);
-
-				/*var file = fs.createReadStream(data.filename);
-				var stat = fs.statSync(data.filename);
-				res.setHeader('Content-Length', stat.size);
-				res.setHeader('Content-Type', 'application/pdf');
-				res.setHeader('Content-Disposition', 'attachment; filename=match.pdf');
-				file.pipe(res);*/
 				console.log(res);
 			});
-		});
+		});*/
 	});
 
 };
