@@ -27,7 +27,15 @@ exports.render = function (req, res) {
 				"border": "20px"
 			}).toFile(`${__dirname}/../../files/match.pdf`, function(err, data) {
 				if (err) return console.log(err);
-				res.download(data.filename);
+
+				//res.download(data.filename);
+
+				var file = fs.createReadStream(data.filename);
+				var stat = fs.statSync(data.filename);
+				res.setHeader('Content-Length', stat.size);
+				res.setHeader('Content-Type', 'application/pdf');
+				res.setHeader('Content-Disposition', 'attachment; filename=match.pdf');
+				file.pipe(res);
 				console.log(res);
 			});
 		});
