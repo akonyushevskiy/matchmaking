@@ -3,6 +3,7 @@ import ejs from 'ejs';
 import pdf from 'html-pdf';
 import _ from 'lodash';
 import moment from 'moment';
+import path from 'path';
 
 var	Matches = require('mongoose').model('Matches');
 
@@ -20,12 +21,12 @@ exports.render = function (req, res) {
 		};
 
 		/*res.render(`${__dirname}/../views/pdf.ejs`, match);*/
-		ejs.renderFile(`${__dirname}/../views/pdf.ejs`, match, {}, function(err, str){
+		ejs.renderFile(path.resolve(`${__dirname}/../views/pdf.ejs`), match, {}, function(err, str){
 			pdf.create(str, {
 				"height": "1131px",
 				"width": "842px",
 				"border": "20px"
-			}).toFile(`${__dirname}/../../files/match.pdf`, function(err, data) {
+			}).toFile(path.resolve(`${__dirname}/../../files/match.pdf`), function(err, data) {
 				if (err) return console.log(err);
 
 				res.download(data.filename);
