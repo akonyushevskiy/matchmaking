@@ -145,7 +145,7 @@ export default class Export extends Component {
 					<div className="desc">
 						{ `${ match.home_team.stadion_name }, ${ match.match.location } | ${ moment(match.match.date).format('DD.MM.YYYY HH:mm') }` }
 					</div>
-					<a href={ `${ROOT_URL}/pdf?id=${this.props.params.match_id}&comment=${this.state.comment.replace(/\r?\n/g, '<br/>')}`} className="btn btn-green">Export</a>
+					<a href={ `${ROOT_URL}/export?id=${this.props.params.match_id}&comment=${this.state.comment.replace(/\r?\n/g, '<br/>')}`} className="btn btn-green">Export</a>
 				</div>
 
 				<div className="export-page">
