@@ -23,7 +23,7 @@ exports.render = function (req, res) {
 		console.log(path.resolve(`${__dirname}/../views/pdf.ejs`));
 		console.log(path.resolve(`${__dirname}/../../files/match.pdf`));
 
-		res.render(`${__dirname}/../views/pdf.ejs`, match);
+		res.render(path.resolve(`${__dirname}/../views/pdf.ejs`), match);
 		/*ejs.renderFile(path.resolve(`${__dirname}/../views/pdf.ejs`), match, {}, function(err, str){
 			pdf.create(str, {
 				"height": "1131px",
