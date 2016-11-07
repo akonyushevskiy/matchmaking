@@ -714,8 +714,8 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td><%= home_team.note %></td>
-                    <td><%= quest_team.note %></td>
+                    <td><%- home_team.note %></td>
+                    <td><%- quest_team.note %></td>
                 </tr>
                 </tbody>
             </table>
@@ -815,10 +815,12 @@
                             <div><b>Number: </b><%= home_team.groups[e][f].number %></div>
                             <div><b>Position: </b><%= home_team.groups[e][f].position %></div>
                         </div>
-                        <div class="mt">
-                            <div><b>Comment:</b></div>
-                            <div><%= home_team.groups[e][f].values[3].value %></div>
-                        </div>
+                        <% if (home_team.groups[e][f].values[3].value && home_team.groups[e][f].values[3].value.length) { %>
+                            <div class="mt">
+                                <div><b>Comment:</b></div>
+                                <div><%= home_team.groups[e][f].values[3].value %></div>
+                            </div>
+                        <% } %>
                         <table>
                             <thead>
                             <tr>
@@ -872,10 +874,12 @@
                             <div><b>Number: </b><%= quest_team.groups[h][i].number %></div>
                             <div><b>Position: </b><%= quest_team.groups[h][i].position %></div>
                         </div>
-                        <div class="mt">
-                            <div><b>Comment:</b></div>
-                            <div><%= quest_team.groups[h][i].values[3].value %></div>
-                        </div>
+                        <% if (quest_team.groups[h][i].values[3].value && quest_team.groups[h][i].values[3].value.length) { %>
+                            <div class="mt">
+                                <div><b>Comment:</b></div>
+                                <div><%= quest_team.groups[h][i].values[3].value %></div>
+                            </div>
+                        <% } %>
                         <table>
                             <thead>
                             <tr>

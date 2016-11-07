@@ -14,6 +14,8 @@ exports.render = function (req, res) {
 
 		match.home_team.groups = _.chunk(match.home_team.items, 3);
 		match.quest_team.groups = _.chunk(match.quest_team.items, 3);
+		match.home_team.note = decodeURIComponent(match.home_team.note).replace(/\r?\n/g, '<br />');
+		match.quest_team.note = decodeURIComponent(match.quest_team.note).replace(/\r?\n/g, '<br />');
 		match.comment = req.query.comment;
 		match.times = {
 			date: moment(match.date).format('DD.MM.YYYY'),
