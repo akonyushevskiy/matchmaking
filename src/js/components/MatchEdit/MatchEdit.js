@@ -73,10 +73,11 @@ class MatchEdit extends Component {
 	render () {
 
 		const { state, props } = this;
-		const { handleSubmit, submitting, teams } = props;
+		const { handleSubmit, submitting, teams, onDelete } = props;
 
 		return (
 			<form className="match-edit" onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+				{ onDelete ? <a href="#" className="btn btn-no-pad btn-color-red" onClick={ onDelete.bind(this) }>Delete</a> : null }
 				<div className="title">{ props.title }</div>
 				<div className="fields clearfix">
 					<div className="col-left">

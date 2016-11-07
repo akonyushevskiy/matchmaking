@@ -11,6 +11,9 @@ import MatchEdit from '../MatchEdit/MatchEdit';
 import { updateMatch, deleteMatch } from '../../actions/index';
 
 class MatchListItem extends Component {
+	static contextTypes = {
+		router: PropTypes.object
+	};
 
 	constructor () {
 		super();
@@ -34,8 +37,9 @@ class MatchListItem extends Component {
 		}
 
 		this.setState({ loading: true });
-		this.props.updateMatch({ ...saveData }).then(() => {
+		this.props.updateMatch({ ...saveData }).then((data) => {
 			this.setState({ edit: !this.state.edit, loading: false });
+			this.context.router.push(`/match/${data.payload.data.match._id}`);
 		});
 	}
 
@@ -62,6 +66,7 @@ class MatchListItem extends Component {
 						btn="Save"
 						match={{ ...match }}
 						loading={ this.state.loading }
+						onDelete={ this.deleteHandler.bind(this) }
 					/>
 				);
 			} else {
@@ -80,7 +85,6 @@ class MatchListItem extends Component {
 							</span>
 						</Link>
 						<div className="controls">
-							<a className="control" onClick={ this.deleteHandler.bind(this) }><Icon name="remove" /></a>
 							<a className="control" onClick={ this.toogleActive.bind(this) }><Icon name="pencil" /></a>
 							<Link className="control" to={ `/export/${match._id}` }><Icon name="pdf" /></Link>
 						</div>

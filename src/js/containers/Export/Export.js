@@ -127,8 +127,6 @@ export default class Export extends Component {
 
 		if (!match) return <div>Loading...</div>;
 
-		console.log(this.props);
-
 		return (
 			<div className="export">
 				<div className="export-header">
@@ -179,8 +177,8 @@ export default class Export extends Component {
 						</thead>
 						<tbody>
 							<tr>
-								<td>{ match.home_team.note }</td>
-								<td>{ match.home_team.note }</td>
+								<td>{ decodeURIComponent(match.home_team.note).split('\n').map((item, key) => <span key={ key }>{item}<br/></span>) }</td>
+								<td>{ decodeURIComponent(match.quest_team.note).split('\n').map((item, key) => <span key={ key }>{item}<br/></span>) }</td>
 							</tr>
 						</tbody>
 					</table>

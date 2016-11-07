@@ -146,7 +146,7 @@ export default class Pitch extends Component {
 					this.setState({
 						activeOuter: false
 					});
-				}, 1000);
+				}, 500);
 
 				this.props.updateMatchTeam({...toSave});
 			};

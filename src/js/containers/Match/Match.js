@@ -45,8 +45,8 @@ class Match extends Component {
 			if (home_team.note || quest_team.note) {
 				this.setState({
 					noteTeams: {
-						home_team: home_team.note || '',
-						quest_team: quest_team.note || ''
+						home_team: decodeURIComponent(home_team.note) || '',
+						quest_team: decodeURIComponent(quest_team.note) || ''
 					}
 				});
 			}
@@ -110,21 +110,23 @@ class Match extends Component {
 	}
 
 	onAddNewPlayer({ team_name, player }) {
+		var active = _.cloneDeep(this.state.addPlayer);
+			active[team_name] = !active[team_name];
+
 		var toSave = {};
 			toSave['match_id'] = this.props.params.match_id;
 			toSave[team_name] = _.cloneDeep(this.props.match[team_name]);
 			toSave[team_name].items.push(player);
 
 		this.props.updateMatchTeam({...toSave});
+		this.setState({ addPlayer: active });
 	}
 
 	toggleActivateAddPlayer(team) {
 		var active = _.cloneDeep(this.state.addPlayer);
 			active[team] = !active[team];
 
-		this.setState({
-			addPlayer: active
-		});
+		this.setState({ addPlayer: active });
 	}
 
 	teamNoteChange(team_name, value) {
@@ -140,7 +142,7 @@ class Match extends Component {
 		var toSave = {};
 			toSave['match_id'] = this.props.params.match_id;
 			toSave[team_name] = _.cloneDeep(this.props.match[team_name]);
-			toSave[team_name].note = this.state.noteTeams[team_name];
+			toSave[team_name].note = encodeURIComponent(this.state.noteTeams[team_name]);
 
 		this.props.updateMatchTeam({...toSave});
 	}

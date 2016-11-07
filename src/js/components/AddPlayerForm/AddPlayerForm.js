@@ -3,6 +3,7 @@ import './AddPlayerForm.scss';
 import React, { Component, PropTypes } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import _ from 'lodash';
+import { connect } from 'react-redux';
 
 const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
 	<input {...input} placeholder={label} type={type} className={ `${ (touched && error) ? 'no-valid' : '' }` }/>
@@ -102,7 +103,12 @@ const validate = (values, props) => {
 	return errors
 };
 
-export default reduxForm({
-	form: 'addPlayer',
-	validate
-})(AddPlayerForm)
+const InitializeForm = reduxForm({ validate })(AddPlayerForm);
+
+function mapStateToProps(state, props) {
+	return {
+		form: `addPlayer${props.team_name}`
+	};
+}
+
+export default connect(mapStateToProps, null)(InitializeForm);

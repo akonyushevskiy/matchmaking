@@ -16,4 +16,12 @@
 		display: block;
 		width: 100%;
 	}
+
+	&.btn-no-pad {
+		padding: 0;
+	}
+
+	&.btn-color-red {
+		color: red;
+	}
 }

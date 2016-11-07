@@ -81,6 +81,10 @@
 		line-height: 35px;
 	}
 
+	.btn-color-red {
+		float: right;
+	}
+
 	.fields {
 		font-size: 0;
 		margin: 30px -10px 0;
@@ -152,5 +156,9 @@
 			transition: transform .2s linear,-webkit-transform .2s linear;
 			animation: loader-2-scale 4s infinite, loader-2-indeterminate 4s infinite;
 		}
+	}
+
+	.react-datepicker__input-container {
+		display: block;
 	}
 }
