@@ -20,18 +20,19 @@ export default class PlayerNote extends Component {
 	componentWillMount() {
 		const { player } = this.props;
 		for (var i = 0, l = player.values.length; i < l; i++) {
-			if (player.values[i].name === 'comment' && player.values[i].value) {
-				this.setState({ oldValue: player.values[i].value || '' })
+			if (player.values[i].name === 'comment' && decodeURIComponent(player.values[i].value)) {
+				this.setState({ oldValue: player.values[i].value ? decodeURIComponent(player.values[i].value) : '' })
 			}
 		}
 	}
 
 	componentDidUpdate() {
+		console.log('componentDidUpdate');
 		const { player } = this.props;
 		for (var i = 0, l = player.values.length; i < l; i++) {
-			if (player.values[i].name === 'comment' && player.values[i].value && player.values[i].value !== this.state.oldValue) {
+			if (player.values[i].name === 'comment' && player.values[i].value && decodeURIComponent(player.values[i].value) !== this.state.oldValue) {
 				this.setState({
-					oldValue: player.values[i].value || '',
+					oldValue: player.values[i].value ? decodeURIComponent(decodeURIComponent(player.values[i].value)) : '',
 					newValue: null
 				});
 			}
@@ -53,9 +54,8 @@ export default class PlayerNote extends Component {
 		return (
 			<div className="player-note">
 				<div className="player-name">{ player.name }</div>
-				<input
-					className="note-input"
-					type="text"
+				<textarea
+					className="note-textarea"
 					value={ typeof this.state.newValue === 'string' ? this.state.newValue : this.state.oldValue }
 					onChange={event => this.onChangeHandler(event.target.value)}
 					onBlur={ this.onBlurHandler.bind(this) }

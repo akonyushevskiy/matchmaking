@@ -97,6 +97,7 @@
 			overflow: auto;
 			-webkit-overflow-scrolling: auto;
 			border: 1px solid #d9d9d9;
+			background: #fff;
 			@include position(absolute, 54px 0 0 0);
 			@include transition(top .4s ease-out);
 		}

@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import moment from 'moment';
 
-import { fetchMatch, updateMatchTeam } from '../../actions/index';
+import { fetchMatch, updateMatchTeam, fetchPositions } from '../../actions/index';
 
 import Icon from '../../components/Icon.js';
 import Pitch from '../../components/Pitch/Pitch.js';
@@ -32,11 +32,13 @@ class Match extends Component {
 			noteTeams: {
 				home_team: '',
 				quest_team: ''
-			}
+			},
+			focused: false
 		}
 	}
 
 	componentDidMount() {
+		this.props.fetchPositions();
 		this.props.fetchMatch({
 			id: this.props.params.match_id
 		}).then(() => {
@@ -53,6 +55,17 @@ class Match extends Component {
 		});
 	}
 
+	componentDidUpdate() {
+		if (this.state.activeTab === 'Teams note') {
+			if (this.refs.focus && !this.state.focused) {
+				this.refs.focus.focus();
+				this.setState({ focused: true });
+			}
+		} else if (this.state.focused) {
+			this.setState({ focused: false });
+		}
+	}
+
 	renderPlayers(team_name) {
 		return this.props.match[team_name].items.map((player, key) =>
 			<Player
@@ -65,33 +78,32 @@ class Match extends Component {
 		)
 	};
 
+	noteSave (key, team, note) {
+		var toSave = {};
+			toSave['match_id'] = this.props.params.match_id;
+			toSave[team] = _.cloneDeep(this.props.match[team]);
+
+		var values = toSave[team].items[key].values;
+
+		for (var i = 0, l = values.length; i < l; i++) {
+			if (values[i].name === 'comment' && values[i].value !== note) {
+				values[i].value = note;
+				break;
+			}
+		}
+
+		this.props.updateMatchTeam({...toSave});
+		//this.forceUpdate();
+	};
+
 	renderNotePlayers(team) {
 		return this.props.match[team].items.map((player, key) => {
-
-			var noteSave = (note) => {
-				var toSave = {
-					match_id: this.props.params.match_id
-				};
-
-				toSave[team] = _.cloneDeep(this.props.match[team]);
-
-				var values = toSave[team].items[key].values;
-
-				for (var i = 0, l = values.length; i < l; i++) {
-					if (values[i].name === 'comment' && values[i].value !== note) {
-						values[i].value = note;
-						this.props.updateMatchTeam({...toSave});
-						this.forceUpdate();
-					}
-				}
-			};
-
 			return (
 				<PlayerNote
 					key={ key }
 					player={ player }
 					team={ team }
-					save={ noteSave.bind(this) }
+					save={ this.noteSave.bind(this, key, team) }
 				/>
 			);
 		})
@@ -159,7 +171,7 @@ class Match extends Component {
 								{ match.home_team.team_name }
 								<a className="add-player" onClick={ this.toggleActivateAddPlayer.bind(this, 'home_team') } href="#">+</a>
 							</div>
-							<AddPlayerForm team_name='home_team' onCancel={ this.toggleActivateAddPlayer.bind(this, 'home_team') } onAddNewPlayer={ this.onAddNewPlayer.bind(this) } numbersReserved={ this.props.match['home_team'].items.map(item => item.number) } />
+							<AddPlayerForm team_name='home_team' onCancel={ this.toggleActivateAddPlayer.bind(this, 'home_team') } onAddNewPlayer={ this.onAddNewPlayer.bind(this) } numbersReserved={ this.props.match['home_team'].items.map(item => item.number) } positions={ this.props.positions } />
 							<div className="team-list">
 								{ this.renderPlayers('home_team') }
 							</div>
@@ -169,7 +181,7 @@ class Match extends Component {
 								{ match.quest_team.team_name }
 								<a className="add-player" onClick={ this.toggleActivateAddPlayer.bind(this, 'quest_team') } href="#">+</a>
 							</div>
-							<AddPlayerForm team_name='quest_team' onCancel={ this.toggleActivateAddPlayer.bind(this, 'quest_team') } onAddNewPlayer={ this.onAddNewPlayer.bind(this) } numbersReserved={ this.props.match['quest_team'].items.map(item => item.number) } />
+							<AddPlayerForm team_name='quest_team' onCancel={ this.toggleActivateAddPlayer.bind(this, 'quest_team') } onAddNewPlayer={ this.onAddNewPlayer.bind(this) } numbersReserved={ this.props.match['quest_team'].items.map(item => item.number) } positions={ this.props.positions } />
 							<div className="team-list">
 								{ this.renderPlayers('quest_team') }
 							</div>
@@ -199,7 +211,7 @@ class Match extends Component {
 						<div className="team-left">
 							<div className="team-name">{ match.home_team.team_name }</div>
 							<div className="team-list">
-								<textarea value={ this.state.noteTeams.home_team } onChange={ event => this.teamNoteChange('home_team', event.target.value) } onBlur={ this.teamNoteSave.bind(this, 'home_team') } className="team-note" placeholder={ `Note for ${match.home_team.team_name}` }></textarea>
+								<textarea ref="focus" value={ this.state.noteTeams.home_team } onChange={ event => this.teamNoteChange('home_team', event.target.value) } onBlur={ this.teamNoteSave.bind(this, 'home_team') } className="team-note" placeholder={ `Note for ${match.home_team.team_name}` }></textarea>
 							</div>
 						</div>
 						<div className="team-right">
@@ -233,7 +245,7 @@ class Match extends Component {
 							{ `${ match.home_team.team_name } – ${ match.quest_team.team_name }` }
 						</div>
 						<div className="desc">
-							{ `${ match.home_team.stadion_name }, ${ match.match.location } | ${ moment(match.match.date).format('DD.MM.YYYY HH:mm') }` }
+							{ `${ match.match.location.label } | ${ moment(match.match.date).format('DD.MM.YYYY HH:mm') }` }
 						</div>
 					</div>
 					{ this.renderTab() }
@@ -251,7 +263,10 @@ class Match extends Component {
 }
 
 function mapStateToProps(state) {
-	return { match: state.match };
+	return {
+		match: state.match,
+		positions: state.positions
+	};
 }
 
 const initDragAndDrop = DragDropContext(TouchBackend({
@@ -260,4 +275,4 @@ const initDragAndDrop = DragDropContext(TouchBackend({
 	delayMouseStart: 100
 }))(Match);
 
-export default connect(mapStateToProps, { fetchMatch, updateMatchTeam })(initDragAndDrop);
+export default connect(mapStateToProps, { fetchMatch, updateMatchTeam, fetchPositions })(initDragAndDrop);

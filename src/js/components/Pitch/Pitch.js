@@ -111,6 +111,12 @@ export default class Pitch extends Component {
 		window.removeEventListener('resize', this.resizeHandler);
 	}
 
+	componentDidUpdate() {
+		if (this.state.commentActive && this.refs.focus) {
+			this.refs.focus && this.refs.focus.focus();
+		}
+	}
+
 	renderPlayers(team_name) {
 		return this.props.match[team_name].items.map((player, key) => {
 			if (!player.active) return null;
@@ -155,7 +161,7 @@ export default class Pitch extends Component {
 				this.setState({
 					commentActive: true,
 					activeOuter: false,
-					comment
+					comment: comment ? decodeURIComponent(comment) : ''
 				})
 			};
 
@@ -190,7 +196,7 @@ export default class Pitch extends Component {
 	}
 
 	onCommentChange(comment) {
-		this.setState({comment: comment});
+		this.setState({ comment });
 	}
 
 	saveComment() {
@@ -202,7 +208,8 @@ export default class Pitch extends Component {
 			toSave[activeTeam] = _.cloneDeep(match[activeTeam]);
 			toSave[activeTeam].items[playerControls].values = toSave[activeTeam].items[playerControls].values.map((value, key) => {
 				if (value.name === 'comment') {
-					value.value = comment;
+					value.value = encodeURIComponent(comment);
+					console.log(value.value);
 				}
 				return value;
 			});
@@ -217,7 +224,7 @@ export default class Pitch extends Component {
 	renderComment () {
 		return (
 			<div className={ `pitch-comment ${this.state.commentActive ? 'active' : ''}` } onClick={ event => { event.stopPropagation() }}>
-				<input className="input" type="text" placeholder="Type here..." value={ this.state.comment } onChange={event => this.onCommentChange(event.target.value)} />
+				<textarea ref="focus" className="textarea" type="text" placeholder="Type here..." value={ this.state.comment } onChange={event => this.onCommentChange(event.target.value)} />
 				<button className="btn btn-green" onClick={ this.saveComment.bind(this) }>Save</button>
 			</div>
 		);

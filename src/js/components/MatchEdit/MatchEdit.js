@@ -7,6 +7,7 @@ import Select from 'react-select';
 import { Field, reduxForm } from 'redux-form';
 import MaskedInput from 'react-maskedinput';
 import moment from 'moment';
+import _ from 'lodash';
 
 //TODO: add to webpack production config, read https://github.com/Hacker0x01/react-datepicker/issues/347
 //  module: {
@@ -14,14 +15,7 @@ import moment from 'moment';
 //  }
 import DatePicker from 'react-datepicker/dist/react-datepicker';
 
-import { fetchTeams } from '../../actions/index';
-
-const cities = [
-	{ value: 'London', label: 'London' },
-	{ value: 'Moscow', label: 'Moscow' },
-	{ value: 'Berlin', label: 'Berlin' },
-	{ value: 'Hamburg', label: 'Hamburg' }
-];
+import { fetchTeams, fetchStadiums } from '../../actions/index';
 
 const fieldSelect = ({ input, ...rest }) => {
 	return (
@@ -33,9 +27,10 @@ const fieldSelect = ({ input, ...rest }) => {
 			clearable={ false }
 			searchable={ true }
 			onChange={ (value)=> {
-				input.onChange(value.value);
+				rest.changeCallback && rest.changeCallback(value);
+				input.onChange(input.name === 'location' ? value : value.value);
 			}}
-			/>
+		/>
 	);
 };
 
@@ -51,7 +46,12 @@ const fieldDatePicker = ({input, ...rest}) => {
 class MatchEdit extends Component {
 
 	componentDidMount() {
-		this.props.fetchTeams();
+		if (!this.props.teams || !this.props.teams.length) {
+			this.props.fetchTeams()
+		}
+		if (!this.props.stadiums || !this.props.stadiums.length) {
+			this.props.fetchStadiums();
+		}
 	}
 
 	onSubmit(formValues) {
@@ -70,10 +70,15 @@ class MatchEdit extends Component {
 		return <div className="match-edit-loader" />;
 	}
 
+	changeHomeTeam(team) {
+		const stadium = _.find(this.props.stadiums, { value: team.stadium_id });
+		this.props.change('location', stadium);
+	}
+
 	render () {
 
 		const { state, props } = this;
-		const { handleSubmit, submitting, teams, onDelete } = props;
+		const { handleSubmit, submitting, teams, onDelete, stadiums } = props;
 
 		return (
 			<form className="match-edit" onSubmit={handleSubmit(this.onSubmit.bind(this))}>
@@ -83,7 +88,7 @@ class MatchEdit extends Component {
 					<div className="col-left">
 						<fieldset className="fieldset--1-2">
 							<label>HOME TEAM</label>
-							<Field placeholder="Select or enter team name…" name="home_team" component={ fieldSelect } options={ teams } />
+							<Field placeholder="Select or enter team name…" name="home_team" component={ fieldSelect } options={ teams } changeCallback={ this.changeHomeTeam.bind(this) } />
 						</fieldset>
 						<fieldset className="fieldset--1-2">
 							<label>GUEST TEAM</label>
@@ -99,7 +104,7 @@ class MatchEdit extends Component {
 						</fieldset>
 						<fieldset className="fieldset--1-3">
 							<label>location</label>
-							<Field placeholder="Enter or select location…" name="location" component={ fieldSelect } options={ cities } />
+							<Field placeholder="Enter or select location…" name="location" component={ fieldSelect } options={ stadiums } />
 						</fieldset>
 					</div>
 					<div className="col-right">
@@ -138,6 +143,7 @@ function mapStateToProps(state, props) {
 	if (!props.match) {
 		return {
 			teams: state.teams,
+			stadiums: state.stadiums,
 			form: 'addMatch',
 			initialValues: {
 				date: moment().format('DD.MM.YYYY'),
@@ -148,17 +154,20 @@ function mapStateToProps(state, props) {
 
 	const { _id ,home_team, quest_team, date, location } = props.match;
 
+	console.log(location);
+
 	return {
 		teams: state.teams,
+		stadiums: state.stadiums,
 		form: `editMatch${_id}`,
 		initialValues: {
 			home_team: parseInt(home_team.team_id),
 			quest_team: parseInt(quest_team.team_id),
 			date: moment(date).format('DD.MM.YYYY'),
 			start: moment(date).format('HH:mm'),
-			location
+			location: location.value
 		}
 	};
 }
 
-export default connect(mapStateToProps, { fetchTeams })(InitializeForm);
+export default connect(mapStateToProps, { fetchTeams, fetchStadiums })(InitializeForm);

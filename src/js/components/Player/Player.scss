@@ -4,9 +4,9 @@
 	padding: 10px 10px 10px 90px;
 	border-top: 1px solid #d9d9d9;
 	position: relative;
-	@include user-select(none);
-
 	cursor:pointer;
+	cursor: grab;
+	@include user-select(none);
 
 
 	&.no-dragable {
@@ -84,9 +84,10 @@
 		white-space: nowrap;
 	}
 
-	.note-input {
+	.note-textarea {
 		width: 100%;
-		height: 40px;
+		height: 72px;
+		line-height: 20px;
 		border: 1px solid #d9d9d9;
 		margin-top: 10px;
 		padding: 5px;

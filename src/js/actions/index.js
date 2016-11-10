@@ -9,6 +9,8 @@ export const FETCH_ADD_MATCH = "FETCH_ADD_MATCH";
 export const UPDATE_MATCH_TEAM = "UPDATE_MATCH_TEAM";
 export const UPDATE_MATCH = "UPDATE_MATCH";
 export const DELETE_MATCH = "DELETE_MATCH";
+export const FETCH_POSITIONS = "FETCH_POSITIONS";
+export const FETCH_STADIUMS = "FETCH_STADIUMS";
 
 export let ROOT_URL = 'http://api.mm.konyushevskiy.com';
 
@@ -109,6 +111,28 @@ export function fetchAddMatch(props) {
 
 	return {
 		type: FETCH_ADD_MATCH,
+		payload: request
+	}
+}
+
+export function fetchPositions(props) {
+	const request = axios.get(`${ROOT_URL}/positions`, {
+		params: props
+	});
+
+	return {
+		type: FETCH_POSITIONS,
+		payload: request
+	}
+}
+
+export function fetchStadiums(props) {
+	const request = axios.get(`${ROOT_URL}/stadiums`, {
+		params: props
+	});
+
+	return {
+		type: FETCH_STADIUMS,
 		payload: request
 	}
 }

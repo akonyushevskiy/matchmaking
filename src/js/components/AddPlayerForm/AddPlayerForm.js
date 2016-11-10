@@ -4,10 +4,28 @@ import React, { Component, PropTypes } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import _ from 'lodash';
 import { connect } from 'react-redux';
+import Select from 'react-select';
 
-const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
-	<input {...input} placeholder={label} type={type} className={ `${ (touched && error) ? 'no-valid' : '' }` }/>
-);
+const renderField = ({ input, type, placeholder, meta: { touched, error, warning }, className }) => {
+	console.log(input);
+	return <input {...input} placeholder={ placeholder } type={ type } className={ `${ className } ${ (touched && error) ? 'no-valid' : '' }` }/>
+};
+
+const fieldSelect = ({ input, ...rest }) => {
+	return (
+		<Select
+			className={ rest.meta.touched && rest.meta.error ? 'no-valid' : '' }
+			{...rest}
+			name={ input.name }
+			value={ input.value }
+			clearable={ false }
+			searchable={ true }
+			onChange={ (value)=> {
+				input.onChange(value.value);
+			}}
+			/>
+	);
+};
 
 class AddPlayerForm extends Component {
 
@@ -59,21 +77,21 @@ class AddPlayerForm extends Component {
 	}
 
 	render() {
-		const { handleSubmit } = this.props;
+		const { handleSubmit, positions } = this.props;
 
 		return (
 			<form className="add-player-form" onSubmit={ handleSubmit(this.onSubmit.bind(this)) }>
 				<fieldset>
 					<label>Full Name</label>
-					<Field name="name" component="input" type="text" placeholder="Player full name" component={ renderField }/>
+					<Field className="input"  name="name" component="input" type="text" placeholder="Player full name" component={ renderField }/>
 				</fieldset>
 				<fieldset className="fieldset--1-3">
 					<label>Number</label>
-					<Field name="number" component="input" type="number" placeholder="Player number" component={ renderField }/>
+					<Field className="input" name="number" component="input" type="number" placeholder="Player number" component={ renderField }/>
 				</fieldset>
 				<fieldset className="fieldset--2-3">
 					<label>Position</label>
-					<Field name="position" component="input" type="text" placeholder="Player position" component={ renderField }/>
+					<Field placeholder="Player position" name="position" component={ fieldSelect } options={ positions } />
 				</fieldset>
 				<fieldset className="fieldset--2-3 text-right">
 					<a href="#" className="btn" onClick={ this.cancelHandler.bind(this) }>Cancel</a>

@@ -56,7 +56,7 @@ export default class PitchPlayer extends Component {
 	}
 
 	render() {
-		const { connectDragSource, isDragging } = this.props;
+		const { connectDragSource, isDragging, player, team_name, className } = this.props;
 
 		if (isDragging) { return null; }
 
@@ -66,8 +66,9 @@ export default class PitchPlayer extends Component {
 		};
 
 		return connectDragSource(
-			<div className={ `pitch-player ${ this.props.team_name } ${ this.props.className }`} style={ position } >
-				<span className="number" onClick={ this.openControl.bind(this) }>{ this.props.player.number }</span>
+			<div className={ `pitch-player ${ team_name } ${ className }`} style={ position } >
+				<span className="number" onClick={ this.openControl.bind(this) }>{ player.number }</span>
+				<div className="pitch-player-name">{ player.name.split(/\s+/).slice(1, 2) }</div>
 				{ this.renderControl() }
 			</div>
 		)

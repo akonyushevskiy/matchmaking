@@ -45,7 +45,10 @@ export default class Export extends Component {
 			if (!player.active) { return null; }
 
 			return (
-				<div key={ key } className={ `pitch-player ${team_name}`} style={{ left: `${player.offset.left * 100}%`, top: `${player.offset.top * 100}%` }}>{ player.number }</div>
+				<div key={ key } className={ `pitch-player ${team_name}`} style={{ left: `${player.offset.left * 100}%`, top: `${player.offset.top * 100}%` }}>
+					{ player.number }
+					<div className="pitch-player-name">{ player.name.split(/\s+/).slice(1, 2) }</div>
+				</div>
 			);
 		});
 	}
@@ -85,7 +88,7 @@ export default class Export extends Component {
 						</div>
 						<div className="mt">
 							<div><b>Comment:</b></div>
-							<div>{ player.values[3].value }</div>
+							<div>{ player.values[3].value ? decodeURIComponent(player.values[3].value).split('\n').map((item, key) => <span key={ key }>{item}<br/></span>) : '' }</div>
 						</div>
 						<table>
 							<thead>
@@ -141,7 +144,7 @@ export default class Export extends Component {
 						{ `${ match.home_team.team_name } – ${ match.quest_team.team_name }` }
 					</div>
 					<div className="desc">
-						{ `${ match.home_team.stadion_name }, ${ match.match.location } | ${ moment(match.match.date).format('DD.MM.YYYY HH:mm') }` }
+						{ `${ match.match.location.label } | ${ moment(match.match.date).format('DD.MM.YYYY HH:mm') }` }
 					</div>
 					<a href={ `${ROOT_URL}/export?id=${this.props.params.match_id}&comment=${this.state.comment.replace(/\r?\n/g, '<br/>')}`} className="btn btn-green">Export</a>
 				</div>
@@ -160,28 +163,32 @@ export default class Export extends Component {
 							<b>Time:</b> { moment(match.match.date).format('HH:mm') }
 						</div>
 						<div>
-							<b>Location:</b> { match.home_team.stadion_name }, { match.match.location }
+							<b>Location:</b> { match.match.location.label }
 						</div>
 					</div>
 
 					<div className="export-comment-title"><b>Comment</b></div>
 					<textarea className="export-comment" onChange={ (event) => { this.onCommentChange(event.target.value) }} value={ this.state.comment } placeholder="Add your comment"></textarea>
 
-					<table>
-						<caption>Teams comment</caption>
-						<thead>
-							<tr>
-								<th>{ match.home_team.team_name }</th>
-								<th>{ match.quest_team.team_name }</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>{ decodeURIComponent(match.home_team.note).split('\n').map((item, key) => <span key={ key }>{item}<br/></span>) }</td>
-								<td>{ decodeURIComponent(match.quest_team.note).split('\n').map((item, key) => <span key={ key }>{item}<br/></span>) }</td>
-							</tr>
-						</tbody>
-					</table>
+					{
+						(match.home_team.note || match.quest_team.note) ?
+							<table>
+								<caption>Teams comment</caption>
+								<thead>
+								<tr>
+									<th>{ match.home_team.team_name }</th>
+									<th>{ match.quest_team.team_name }</th>
+								</tr>
+								</thead>
+								<tbody>
+								<tr>
+									<td>{ decodeURIComponent(match.home_team.note).split('\n').map((item, key) => <span key={ key }>{item}<br/></span>) }</td>
+									<td>{ decodeURIComponent(match.quest_team.note).split('\n').map((item, key) => <span key={ key }>{item}<br/></span>) }</td>
+								</tr>
+								</tbody>
+							</table>
+							: null
+					}
 				</div>
 
 				<div className="export-page">

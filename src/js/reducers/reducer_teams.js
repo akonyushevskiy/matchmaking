@@ -8,7 +8,8 @@ export default function (state = INITIAL_STATE, action) {
 			return action.payload.data.teams.map((team) => {
 				return {
 					label: team.team_name,
-					value: team.team_id
+					value: team.team_id,
+					stadium_id: team.stadium_id
 				}
 			});
 		default:

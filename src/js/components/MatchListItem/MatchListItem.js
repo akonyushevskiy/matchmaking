@@ -22,6 +22,7 @@ class MatchListItem extends Component {
 
 	onSubmit (match) {
 		const { date, home_team, location, quest_team, start } = match;
+
 		var saveData = {
 			match_id: this.props.match._id,
 			date: moment(`${match.date} ${match.start}`, "DD.MM.YYYY HH:mm").format(),
@@ -81,7 +82,7 @@ class MatchListItem extends Component {
 								{ `${ match.home_team.team_name } – ${ match.quest_team.team_name }` }
 							</span>
 							<span className="desc">
-								{ `${ match.home_team.stadion_name }, ${ match.location } | ${ moment(match.date).format('DD.MM.YYYY HH:mm') }` }
+								{ `${ match.location.label } | ${ moment(match.date).format('DD.MM.YYYY HH:mm') }` }
 							</span>
 						</Link>
 						<div className="controls">
@@ -102,7 +103,7 @@ class MatchListItem extends Component {
 }
 
 function mapStateToProps(state) {
-	return { matches: state.matches };
+	return {  };
 }
 
 export default connect(mapStateToProps, { updateMatch, deleteMatch })(MatchListItem);

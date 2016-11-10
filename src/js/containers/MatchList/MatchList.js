@@ -14,9 +14,7 @@ class MatchList extends Component {
 		const { matches } = this.props;
 
 		if ( matches.length ) {
-			return this.props.matches.map((match, key) => {
-				return <MatchListItem key={ key } match={ match }/>
-			});
+			return this.props.matches.map(match => <MatchListItem key={ match._id } match={ match }/>);
 		}
 	}
 
@@ -42,6 +40,9 @@ class MatchList extends Component {
 }
 
 function mapStateToProps(state) {
+
+	console.log(state);
+
 	return { matches: state.matches };
 }
 
