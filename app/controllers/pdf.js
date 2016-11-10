@@ -14,16 +14,13 @@ exports.render = function (req, res) {
 
 		match.home_team.groups = _.chunk(match.home_team.items, 3);
 		match.quest_team.groups = _.chunk(match.quest_team.items, 3);
-		match.home_team.note = decodeURIComponent(match.home_team.note).replace(/\r?\n/g, '<br />');
-		match.quest_team.note = decodeURIComponent(match.quest_team.note).replace(/\r?\n/g, '<br />');
+		match.home_team.note = match.home_team.note ? decodeURIComponent(match.home_team.note).replace(/\r?\n/g, '<br />') : null;
+		match.quest_team.note = match.quest_team.note ? decodeURIComponent(match.quest_team.note).replace(/\r?\n/g, '<br />') : null;
 		match.comment = req.query.comment;
 		match.times = {
 			date: moment(match.date).format('DD.MM.YYYY'),
 			time: moment(match.date).format('HH:mm')
 		};
-
-		console.log(path.resolve(`${__dirname}/../views/pdf.ejs`));
-		console.log(path.resolve(`${__dirname}/../../files/match.pdf`));
 
 		/*res.render(path.resolve(`${__dirname}/../../app/views/pdf.ejs`), match);*/
 		ejs.renderFile(path.resolve(`${__dirname}/../../app/views/pdf.ejs`), match, {}, function(err, str){

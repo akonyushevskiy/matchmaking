@@ -57,6 +57,8 @@ module.exports = function () {
 	require('../routes/teams')(app);
 	require('../routes/match')(app);
 	require('../routes/pdf')(app);
+	require('../routes/positions')(app);
+	require('../routes/stadiums')(app);
 
 	return app;
 };

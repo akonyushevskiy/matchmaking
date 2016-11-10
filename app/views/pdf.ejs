@@ -605,8 +605,8 @@
             background-position: center center;
             background-repeat: no-repeat;
             background: radial-gradient(circle, #242F3A, #1D2429);
-            width: 500px;
-            height: 750px;
+            height: 996px;
+            width: 664px;
             position: relative;
             margin: 40px auto 20px;
         }
@@ -655,12 +655,35 @@
             margin: -20px 0 0 -20px;
         }
 
+        .export .export-pitch .pitch-player .pitch-player-name {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            -webkit-transform: translateX(-50%);
+            -moz-transform: translateX(-50%);
+            -ms-transform: translateX(-50%);
+            -o-transform: translateX(-50%);
+            transform: translateX(-50%);
+            line-height: 20px;
+            font-size: 16px;
+            margin-top: 2px;
+            text-shadow: 1px 1px 0 #1D2429, -1px -1px 0 #1D2429, 1px -1px 0 #1D2429, -1px 1px 0 #1D2429, 2px 2px 0 #1D2429, -2px -2px 0 #1D2429, 2px -2px 0 #1D2429, -2px 2px 0 #1D2429;
+        }
+
         .export .export-pitch .pitch-player.home_team {
             background: #fff;
         }
 
+        .export .export-pitch .pitch-player.home_team .pitch-player-name {
+            color: #fff;
+        }
+
         .export .export-pitch .pitch-player.quest_team {
             background: #32cf65;
+        }
+
+        .export .export-pitch .pitch-player.quest_team .pitch-player-name {
+            color: #32cf65;
         }
 
         .export .player-profile {
@@ -696,7 +719,7 @@
             <div class="mt">
                 <div><b>Date:</b> <%= times.date %></div>
                 <div><b>Time:</b> <%= times.time %></div>
-                <div><b>Location:</b> <%= home_team.stadion_name %>, <%= location %></div>
+                <div><b>Location:</b> <%= location.label %></div>
             </div>
 
             <% if (comment) { %>
@@ -704,21 +727,31 @@
                 <div><%- comment %></div>
             <% } %>
 
-            <table>
-                <caption>Teams comment</caption>
-                <thead>
-                <tr>
-                    <th><%= home_team.team_name %></th>
-                    <th><%= quest_team.team_name %></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td><%- home_team.note %></td>
-                    <td><%- quest_team.note %></td>
-                </tr>
-                </tbody>
-            </table>
+            <% if (home_team.note || quest_team.note) { %>
+                <table>
+                    <caption>Teams comment</caption>
+                    <thead>
+                    <tr>
+                        <th><%= home_team.team_name %></th>
+                        <th><%= quest_team.team_name %></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <% if (home_team.note) { %>
+                                    <%- home_team.note %>
+                                <% } %>
+                            </td>
+                            <td>
+                                <% if (quest_team.note) { %>
+                                    <%- quest_team.note %>
+                                <% } %>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            <% } %>
         </div>
 
         <div class="break-after">
@@ -727,30 +760,36 @@
                     <g class="pitch-area">
                         <defs>
                             <clipPath id="cut">
-                                <rect x="1" y="120.67999999999995" width="498" height="508.63999999999976" fill="red"></rect>
+                                <rect x="1" y="160.03999999999994" width="662" height="675.9199999999996" fill="red"></rect>
                             </clipPath>
                         </defs>
-                        <rect x="1" y="1" width="498" height="747.9999999999997"></rect>
-                        <rect x="100.6" y="1" width="298.8" height="119.67999999999995"></rect>
-                        <rect x="100.6" y="629.3199999999997" width="298.8" height="119.67999999999995"></rect>
-                        <rect x="175.3" y="1" width="149.4" height="44.87999999999998"></rect>
-                        <rect x="175.3" y="704.1199999999997" width="149.4" height="44.87999999999998"></rect>
-                        <line x1="1" x2="499" y1="374.99999999999983" y2="374.99999999999983"></line>
-                        <circle cx="250" cy="374.99999999999983" r="69.72000000000001"></circle>
-                        <circle cx="250" cy="83.27999999999996" r="69.72000000000001" clip-path="url(#cut)"></circle>
-                        <circle cx="250" cy="666.7199999999997" r="69.72000000000001" clip-path="url(#cut)"></circle>
+                        <rect x="1" y="1" width="662" height="993.9999999999995"></rect>
+                        <rect x="133.4" y="1" width="397.2" height="159.03999999999994"></rect>
+                        <rect x="133.4" y="835.9599999999996" width="397.2" height="159.03999999999994"></rect>
+                        <rect x="232.7" y="1" width="198.6" height="59.63999999999997"></rect>
+                        <rect x="232.7" y="935.3599999999996" width="198.6" height="59.63999999999997"></rect>
+                        <line x1="1" x2="663" y1="497.9999999999998" y2="497.9999999999998"></line>
+                        <circle cx="332" cy="497.9999999999998" r="92.68"></circle>
+                        <circle cx="332" cy="110.33999999999995" r="92.68" clip-path="url(#cut)"></circle>
+                        <circle cx="332" cy="885.6599999999996" r="92.68" clip-path="url(#cut)"></circle>
                     </g>
                 </svg>
 
                 <% for( var a = 0; a < home_team.items.length; a++) {%>
                     <% if (home_team.items[a].active) { %>
-                        <div class="pitch-player home_team" style="left: <%= home_team.items[a].offset.left * 100 %>%; top: <%= home_team.items[a].offset.top * 100 %>%;"><%= home_team.items[a].number %></div>
+                        <div class="pitch-player home_team" style="left: <%= home_team.items[a].offset.left * 100 %>%; top: <%= home_team.items[a].offset.top * 100 %>%;">
+                            <%= home_team.items[a].number %>
+                            <div class="pitch-player-name"><%= home_team.items[a].name.split(/\s+/).slice(1, 2) %></div>
+                        </div>
                     <% } %>
                 <% } %>
 
                 <% for( var b = 0; b < quest_team.items.length; b++) {%>
                     <% if (quest_team.items[b].active) { %>
-                        <div class="pitch-player quest_team" style="left: <%= quest_team.items[b].offset.left * 100 %>%; top: <%= quest_team.items[b].offset.top * 100 %>%;"><%= quest_team.items[b].number %></div>
+                        <div class="pitch-player quest_team" style="left: <%= quest_team.items[b].offset.left * 100 %>%; top: <%= quest_team.items[b].offset.top * 100 %>%;">
+                            <%= quest_team.items[b].number %>
+                            <div class="pitch-player-name"><%= quest_team.items[b].name.split(/\s+/).slice(1, 2) %></div>
+                        </div>
                     <% } %>
                 <% } %>
 
@@ -818,7 +857,7 @@
                         <% if (home_team.groups[e][f].values[3].value && home_team.groups[e][f].values[3].value.length) { %>
                             <div class="mt">
                                 <div><b>Comment:</b></div>
-                                <div><%= home_team.groups[e][f].values[3].value %></div>
+                                <div><%- home_team.groups[e][f].values[3].value %></div>
                             </div>
                         <% } %>
                         <table>
@@ -877,7 +916,7 @@
                         <% if (quest_team.groups[h][i].values[3].value && quest_team.groups[h][i].values[3].value.length) { %>
                             <div class="mt">
                                 <div><b>Comment:</b></div>
-                                <div><%= quest_team.groups[h][i].values[3].value %></div>
+                                <div><%- quest_team.groups[h][i].values[3].value %></div>
                             </div>
                         <% } %>
                         <table>

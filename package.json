@@ -38,6 +38,8 @@
     "babel-register": "^6.14.0",
     "html-pdf": "^2.1.0",
     "mu2": "^0.5.21",
-    "pdfkit": "^0.8.0"
+    "pdfkit": "^0.8.0",
+    "replacestream": "^4.0.2",
+    "split": "^1.0.0"
   }
 }

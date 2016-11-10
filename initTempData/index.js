@@ -5,9 +5,11 @@ var mongoose = require('../app/config/mongoose');
 var db = mongoose();
 
 var fs = require('fs'),
+	replaceStream = require('replacestream'),
 	Teams = require('mongoose').model('Teams'),
 	Matches = require('mongoose').model('Matches');
 
+/*
 fs.readFile(__dirname + '/players.json', 'utf8', function (err, players) {
 	if (err) throw err;
 
@@ -314,4 +316,21 @@ fs.readFile(__dirname + '/players.json', 'utf8', function (err, players) {
 		if (err) console.log(err);
 		console.log('Done');
 	})
+});*/
+
+/*var rstream = fs.createReadStream(__dirname + '/players2.json');
+var wstream = fs.createWriteStream(__dirname + '/players3.json');
+
+rstream.pipe(replaceStream('none', 'null')).pipe(wstream);
+
+rstream.on('end', () => {
+	console.log('There will be no more data.');
+});*/
+
+fs.readFile(__dirname + '/players3.json', 'utf8', function (err, players) {
+	players = JSON.parse(players);
+
+	console.log(teams.length);
+
+	console.log(players.length);
 });

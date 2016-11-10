@@ -18,7 +18,8 @@ TeamsScheme.statics.getTeams = function() {
 			'$project': {
 				_id: 0,
 				team_name: "$team_name",
-				team_id: "$team_id"
+				team_id: "$team_id",
+				stadium_id: "$stadion_id"
 			}
 		}
 	]).then(( teams ) => {

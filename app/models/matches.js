@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const MatchesScheme = new Schema({
 	date: Date,
-	location: String,
+	location: Object,
 	home_team: Object,
 	quest_team: Object
 });
